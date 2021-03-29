@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }) {
 
     const handleClientLoad = async () => {
         typeof window !== "undefined" &&
-            gapi.load("client:auth2", async () => {
+            window.gapi.load("client:auth2", async () => {
                 await window.gapi.client.init({
                     apiKey: API_KEY,
                     clientId: CLIENT_ID,
