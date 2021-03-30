@@ -44,13 +44,7 @@ export default function Navbar() {
                                 Sign Out
                             </button>
                         </li>
-                        <li>
-                            <Link href="/admin">
-                                <button className="btn-blue">
-                                    Write Posts
-                                </button>
-                            </Link>
-                        </li>
+
                         <li>
                             <Link href={`/${username}`}>
                                 <img src={user?.photoURL || "/hacker.png"} />

@@ -16,8 +16,6 @@ import toast from "react-hot-toast";
 export default function Login(props) {
     const { user, username, loading } = useContext(UserContext);
 
-    console.log(username);
-
     useAuthRedirect({
         username,
         loading,
@@ -28,22 +26,20 @@ export default function Login(props) {
     // 2. user signed in, but missing username <UsernameForm />
     // 3. user signed in, has username <SignOutButton />
     return (
-        <>
-            <main>
-                <Metatags title="Login" description="Login to Dynamily" />
-                {loading ? (
-                    <Loader show={true} />
-                ) : user ? (
-                    username === null ? (
-                        <UsernameForm />
-                    ) : (
-                        <Loader show={true} />
-                    )
+        <main>
+            <Metatags title="Login" description="Login to Dynamily" />
+            {loading ? (
+                <Loader show={true} />
+            ) : user ? (
+                username === null ? (
+                    <UsernameForm />
                 ) : (
-                    <SignInButton />
-                )}
-            </main>
-        </>
+                    <Loader show={true} />
+                )
+            ) : (
+                <SignInButton />
+            )}
+        </main>
     );
 }
 
@@ -132,26 +128,6 @@ function SignInButton(props) {
     );
 }
 
-// Sign out button
-// function SignOutButton() {
-//     const gapiLoaded = useContext(GAPIContext);
-
-//     return (
-//         <button
-//             onClick={
-//                 gapiLoaded
-//                     ? () => {
-//                           gapi.auth2.getAuthInstance().signOut();
-//                           auth.signOut();
-//                       }
-//                     : null
-//             }
-//         >
-//             Sign Out
-//         </button>
-//     );
-// }
-
 // Username form
 function UsernameForm() {
     const [formValue, setFormValue] = useState("");
@@ -173,6 +149,8 @@ function UsernameForm() {
             username: formValue,
             photoURL: user.photoURL,
             displayName: user.displayName,
+            email: user.email,
+            familyId: null,
         });
         batch.set(usernameDoc, { uid: user.uid });
 
