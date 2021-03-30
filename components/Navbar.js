@@ -4,13 +4,15 @@ import { useContext } from "react";
 import { UserContext, GAPIContext } from "@lib/context";
 import { auth, signOut } from "@lib/firebase";
 
+import Loader from "@components/Loader";
+
 import utilStyles from "@styles/utils.module.scss";
 
 import Logo from "@icons/Logo.svg";
 
 // Top navbar
 export default function Navbar() {
-    const { user, username } = useContext(UserContext);
+    const { user, username, loading } = useContext(UserContext);
 
     const gapiLoaded = useContext(GAPIContext);
 
@@ -26,6 +28,8 @@ export default function Navbar() {
                         </a>
                     </Link>
                 </li>
+
+                {loading && <Loader show={true} />}
 
                 {/* user is signed-in and has username */}
                 {username && (
@@ -56,7 +60,7 @@ export default function Navbar() {
                 )}
 
                 {/* user is not signed OR has not created username */}
-                {!username && (
+                {!username && !loading && (
                     <li>
                         <Link href="/login">
                             <button className="btn-blue">Log in</button>

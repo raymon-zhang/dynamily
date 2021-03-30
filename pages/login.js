@@ -1,7 +1,7 @@
 import { auth, firestore, googleAuthProvider } from "@lib/firebase";
 import { UserContext, GAPIContext } from "@lib/context";
 import { useAuthRedirect } from "@lib/hooks";
-// import Metatags from "@components/Metatags";
+import Metatags from "@components/Metatags";
 import Loader from "@components/Loader";
 
 import styles from "@styles/login.module.scss";
@@ -16,21 +16,25 @@ import toast from "react-hot-toast";
 export default function Login(props) {
     const { user, username, loading } = useContext(UserContext);
 
-    useAuthRedirect({ user, loading, redirectTo: "/", redirectIfFound: true });
+    console.log(username);
+
+    useAuthRedirect({
+        username,
+        loading,
+        redirectTo: "/",
+        redirectIfFound: true,
+    });
     // 1. user signed out <SignInButton />
     // 2. user signed in, but missing username <UsernameForm />
     // 3. user signed in, has username <SignOutButton />
     return (
         <>
             <main>
-                {/* <Metatags
-                title="Enter"
-                description="Sign up for this amazing app!"
-            /> */}
+                <Metatags title="Login" description="Login to Dynamily" />
                 {loading ? (
                     <Loader show={true} />
                 ) : user ? (
-                    !username ? (
+                    username === null ? (
                         <UsernameForm />
                     ) : (
                         <Loader show={true} />
@@ -123,9 +127,6 @@ function SignInButton(props) {
                 onClick={gapiLoaded ? signInWithGoogle : null}
             >
                 <GoogleIcon className={styles.googleIcon} /> Sign in with Google
-            </button>
-            <button onClick={() => auth.signInAnonymously()}>
-                Sign in Anonymously
             </button>
         </>
     );

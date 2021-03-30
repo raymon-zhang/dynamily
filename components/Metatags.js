@@ -3,7 +3,7 @@ import Head from "next/head";
 export default function Metatags({
     title = "Dynamily",
     description = "Dynamily helps you manage and connect your family's everyday life.",
-    image = "https://fireship.io/courses/react-next-firebase/img/featured.png",
+    image = "/images/featured.png",
 }) {
     return (
         <Head>
