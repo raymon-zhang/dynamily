@@ -3,7 +3,7 @@ import Head from "next/head";
 export default function Metatags({
     title = "Dynamily",
     description = "Dynamily helps you manage and connect your family's everyday life.",
-    image = process.env.VERCEL_URL + "/images/featured.png",
+    image = process.env.NEXT_PUBLIC_VERCEL_URL + "/images/featured.png",
 }) {
     return (
         <Head>
