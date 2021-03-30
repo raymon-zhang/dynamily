@@ -8,7 +8,7 @@ import utilStyles from "@styles/utils.module.scss";
 
 export default function Home() {
     return (
-        <main className={styles.main}>
+        <main className={styles.heading}>
             <Metatags />
             <AuthCheck fallback={<LandingPage />}>
                 <FamilyDashboard />
