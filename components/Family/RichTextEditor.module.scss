@@ -1,0 +1,40 @@
+.button {
+    cursor: pointer;
+    color: #cccccc;
+    fill: #cccccc;
+}
+
+.active {
+    color: black;
+    fill: black;
+}
+
+.menu {
+    & > * {
+        display: inline-block;
+
+        svg {
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+    }
+
+    //Selects all items not including first
+    & > * + * {
+        margin-left: 10px;
+    }
+
+    .submit {
+        margin-left: auto;
+        background-color: var(--color-green-light);
+        color: var(--color-green);
+    }
+}
+
+.toolbar {
+    padding-top: 20px;
+    border-top: 2px solid #eeeeee;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}

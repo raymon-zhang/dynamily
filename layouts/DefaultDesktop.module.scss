@@ -1,0 +1,20 @@
+.gridContainer {
+    display: grid;
+    column-gap: 60px;
+}
+
+.threeCols {
+    grid-template-columns: 235px 640px 325px;
+}
+
+.twoCols {
+    grid-template-columns: 60px 640px 325px;
+}
+
+.oneCols {
+    grid-template-columns: 60px 640px;
+}
+
+.fullScreen {
+    grid-template-columns: 1fr;
+}

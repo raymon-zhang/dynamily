@@ -1,11 +1,15 @@
 import { useState } from "react";
 import Head from "next/head";
 
+import ReactModal from "react-modal";
+
 import "@styles/globals.scss";
+
 import Navbar from "@components/Navbar";
+import Toasts from "@components/Toasts";
+
 import { UserContext, GAPIContext } from "@lib/context";
 import { useUserData } from "@lib/hooks";
-import { Toaster } from "react-hot-toast";
 
 function MyApp({ Component, pageProps }) {
     const userData = useUserData();
@@ -41,10 +45,11 @@ function MyApp({ Component, pageProps }) {
             });
     };
 
+    ReactModal.setAppElement("#__next");
+
     return (
         <UserContext.Provider value={userData}>
             <GAPIContext.Provider value={isGAPILoaded}>
-                <Navbar />
                 <Head>
                     <script
                         async
@@ -52,9 +57,22 @@ function MyApp({ Component, pageProps }) {
                         src="/js/gapi.js"
                         onLoad={onLoad()}
                     ></script>
+                    <link
+                        rel="preload"
+                        href="/fonts/GlacialIndifference-Regular.otf"
+                        as="font"
+                        crossOrigin=""
+                    />
+                    <link
+                        rel="preload"
+                        href="/fonts/GlacialIndifference-Bold.otf"
+                        as="font"
+                        crossOrigin=""
+                    />
                 </Head>
+                <Navbar />
                 <Component {...pageProps} />
-                <Toaster />
+                <Toasts />
             </GAPIContext.Provider>
         </UserContext.Provider>
     );

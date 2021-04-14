@@ -1,17 +1,101 @@
 @use "./variables" as v;
 
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+// ::-webkit-scrollbar-track {
+//     background-color: #0000001a;
+// }
+
+::-webkit-scrollbar-thumb {
+    background-color: #0000001a;
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #00000033;
+}
+
+:root {
+    --color-base: #ffffff;
+    --color-bg: #fbfdff;
+    --color-bg-accent: #efefef;
+    --color-text: #08090a;
+    --color-text-light: #80959b;
+    --color-blue: #314bce;
+    --color-blue-light: #edf0fc;
+    --color-blue-lighter: #ccd2ec;
+    --color-red: #ff897e;
+    --color-red-light: #fcf1f0;
+    --color-green: #10ba77;
+    --color-green-light: #ebfaf4;
+    --color-gray: #d0d5da;
+    --color-shadow: #0000000a;
+
+    --top-margin: 100px;
+
+    --timing: 300ms ease;
+}
+
+@font-face {
+    font-family: "Glacial Indifference";
+    src: url("/fonts/GlacialIndifference-Regular.otf");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Glacial Indifference";
+    src: url("/fonts/GlacialIndifference-Bold.otf");
+    font-style: bold;
+    font-weight: 600;
+    font-display: swap;
+}
+
 html,
 body {
     padding: 0;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    background-color: v.$color-bg;
-    color: v.$color-text;
+    font-family: Glacial Indifference, -apple-system, BlinkMacSystemFont,
+        Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+        Helvetica Neue, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
 }
 
-body {
-    margin-top: 100px;
+.lightTheme {
+    --color-bg: #fbfdff;
+    --color-bg-accent: #efefef;
+    --color-text: #08090a;
+    --color-text-light: #838991;
+    --color-blue: #314bce;
+    --color-blue-light: #eaedfa;
+    --color-blue-lighter: #ccd2ec;
+    --color-red: #ff897e;
+    --color-red-light: #fcf1f0;
+    --color-green: #10ba77;
+    --color-green-light: #ebfaf4;
+    --color-gray: #d0d5da;
+    --color-shadow: #0000000a;
+}
+
+.darkTheme {
+    --color-bg: #fbfdff;
+    --color-bg-accent: #efefef;
+    --color-text: #08090a;
+    --color-text-light: #838991;
+    --color-blue: #314bce;
+    --color-blue-light: #eaedfa;
+    --color-blue-lighter: #ccd2ec;
+    --color-red: #ff897e;
+    --color-red-light: #fcf1f0;
+    --color-green: #10ba77;
+    --color-green-light: #ebfaf4;
+    --color-gray: #d0d5da;
+    --color-shadow: #0000000a;
 }
 
 a {
@@ -24,8 +108,8 @@ a {
 }
 
 .loader {
-    border: 2px solid v.$color-bg-accent;
-    border-top: 2px solid v.$color-blue;
+    border: 2px solid var(--color-bg-accent);
+    border-top: 2px solid var(--color-blue);
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -45,7 +129,8 @@ a {
 }
 
 main {
-    padding: 1rem 10vw;
+    display: flex;
+    justify-content: center;
 }
 
 // Navbar
@@ -54,13 +139,13 @@ main {
     height: 70px;
     width: 100%;
     background-color: #ffffffcc;
-    color: v.$color-text;
+    color: var(--color-text);
     position: fixed;
     top: 0;
     padding: 0 10vw;
     font-weight: bold;
     z-index: 99;
-    box-shadow: 0px 5px 20px v.$color-shadow;
+    box-shadow: 0px 5px 20px var(--color-shadow);
     backdrop-filter: blur(4px);
 
     ul {
@@ -87,21 +172,21 @@ main {
 
 button,
 .btn {
-    background-color: v.$color-gray;
+    background-color: var(--color-gray);
     border: none;
-    color: v.$color-text;
-    padding: 0.8rem 1.6rem;
+    color: var(--color-text);
+    padding: 0.7rem 2.2rem;
     display: flex;
     align-items: center;
     text-align: center;
     justify-content: center;
     text-decoration: none;
     font-family: inherit;
-    font-size: inherit;
-    border-radius: 0.3rem;
+    font-size: 0.9rem;
+    border-radius: 0.4rem;
     cursor: pointer;
     margin: 0.5rem 1rem 0.5rem 0;
-    transition: filter v.$timing;
+    transition: filter var(--timing);
 
     @media only screen and (max-width: v.$bp-tablet) {
         padding: 0.5rem 1rem;
@@ -109,32 +194,84 @@ button,
     }
 
     &:hover {
-        filter: brightness(90%);
+        filter: brightness(95%);
     }
 
     &:disabled,
     &[disabled] {
-        filter: brightness(80%);
+        filter: opacity(70%);
         cursor: not-allowed;
     }
 
     &.btn-blue {
-        background-color: v.$color-blue;
+        background-color: var(--color-blue);
         color: white;
     }
 
     &.btn-red {
-        background-color: v.$color-red;
+        background-color: var(--color-red);
         color: white;
     }
 
     &.btn-green {
-        background-color: v.$color-green;
+        background-color: var(--color-green);
         color: white;
     }
+
+    &.btn-blue-light {
+        background-color: var(--color-blue-light);
+        color: var(--color-blue);
+    }
+
+    &.btn-red-light {
+        background-color: var(--color-red-light);
+        color: var(--color-red);
+    }
+
+    &.btn-green-light {
+        background-color: var(--color-green-light);
+        color: var(--color-green);
+    }
+}
+
+input {
+    display: inline-block;
+    outline: none;
+    border: none;
+    border-radius: 0.5rem;
+    font-family: inherit;
+    font-size: 1rem;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: var(--color-blue-light);
 }
 
 .logo {
     display: block;
     font-size: 0;
+}
+
+.text-success {
+    color: var(--color-green) !important;
+}
+
+.text-danger {
+    color: var(--color-red) !important;
+}
+
+.marginSpacing {
+    margin: 0.8rem 1rem 0.8rem 0;
+}
+
+blockquote {
+    border-left: 2px solid #ddd;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 10px;
+    color: #aaa;
+    font-style: italic;
+}
+
+[data-slate-editor] > * + * {
+    margin-top: 1em;
 }

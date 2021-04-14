@@ -4,8 +4,10 @@
       "paths": {
         "@components/*": ["components/*"],
         "@styles/*": ["styles/*"],
-        "@lib/*": ["lib/*"],
         "@icons/*": ["icons/*"],
+        "@layouts/*": ["layouts/*"],
+        "@lib/*": ["lib/*"],
+        "@utils/*": ["utils/*"],
       }
     }
   }

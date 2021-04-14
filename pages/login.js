@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { auth, firestore, googleAuthProvider } from "@lib/firebase";
 import { UserContext, GAPIContext } from "@lib/context";
 import { useAuthRedirect } from "@lib/hooks";
@@ -5,6 +7,7 @@ import Metatags from "@components/Metatags";
 import Loader from "@components/Loader";
 
 import styles from "@styles/login.module.scss";
+import utilStyles from "@styles/utils.module.scss";
 
 import GoogleIcon from "@icons/google.svg";
 
@@ -12,6 +15,9 @@ import { useEffect, useState, useCallback, useContext } from "react";
 
 import debounce from "lodash.debounce";
 import toast from "react-hot-toast";
+
+import LoginButtonSide from "@icons/loginButtonSide.svg";
+import LoginUsernameSide from "@icons/loginUsernameSide.svg";
 
 export default function Login(props) {
     const { user, username, loading } = useContext(UserContext);
@@ -75,6 +81,7 @@ function SignInButton(props) {
     }
 
     const signInWithGoogle = async () => {
+        var error;
         await gapi.auth2
             .getAuthInstance()
             .signIn()
@@ -90,12 +97,14 @@ function SignInButton(props) {
                     }
                 });
             })
-            .catch((error) => {
+            .catch((e) => {
                 toast.error("Error logging in");
+                error = e;
             });
-
-        listUpcomingEvents();
-        toast.success("Logged in");
+        if (!error) {
+            listUpcomingEvents();
+            toast.success("Logged in successfuly");
+        }
     };
 
     const isUserEqual = (googleUser, firebaseUser) => {
@@ -117,14 +126,31 @@ function SignInButton(props) {
     const gapiLoaded = useContext(GAPIContext);
 
     return (
-        <>
-            <button
-                className={styles.googleBtn}
-                onClick={gapiLoaded ? signInWithGoogle : null}
-            >
-                <GoogleIcon className={styles.googleIcon} /> Sign in with Google
-            </button>
-        </>
+        <div className={`${utilStyles.boxCenter} ${styles.loginOuter}`}>
+            <div className={styles.loginContainer}>
+                <div className={styles.loginSide}>
+                    <LoginButtonSide className={styles.loginSideFigure} />
+                </div>
+                <div className={styles.loginMain}>
+                    <h3
+                        className={`${utilStyles.headingLg} ${styles.loginHeading}`}
+                    >
+                        Sign in to your account
+                    </h3>
+                    <p>
+                        By signing in, you agree to our Terms of service and
+                        Privacy policy.
+                    </p>
+                    <button
+                        className={`${styles.googleBtn} ${utilStyles.borderCircle}`}
+                        onClick={gapiLoaded ? signInWithGoogle : null}
+                    >
+                        <GoogleIcon className={styles.googleIcon} /> Sign in
+                        with Google
+                    </button>
+                </div>
+            </div>
+        </div>
     );
 }
 
@@ -199,38 +225,50 @@ function UsernameForm() {
 
     return (
         !username && (
-            <section>
-                <h3>Choose Username</h3>
-                <form onSubmit={onSubmit}>
-                    <input
-                        name="username"
-                        placeholder="myname"
-                        value={formValue}
-                        onChange={onChange}
-                    />
-                    <UsernameMessage
-                        username={formValue}
-                        isValid={isValid}
-                        loading={loading}
-                    />
-                    <button
-                        type="submit"
-                        className="btn-green"
-                        disabled={!isValid}
-                    >
-                        Choose
-                    </button>
+            <div className={`${utilStyles.boxCenter} ${styles.loginOuter}`}>
+                <div className={styles.loginContainer}>
+                    <div className={styles.loginMain}>
+                        <h3
+                            className={`${utilStyles.headingLg} ${styles.loginHeading}`}
+                        >
+                            Choose Username
+                        </h3>
+                        <form onSubmit={onSubmit}>
+                            <input
+                                name="username"
+                                className={utilStyles.borderCircle}
+                                placeholder="myname"
+                                value={formValue}
+                                onChange={onChange}
+                            />
+                            <UsernameMessage
+                                username={formValue}
+                                isValid={isValid}
+                                loading={loading}
+                            />
+                            <button
+                                type="submit"
+                                className="btn-blue-light"
+                                disabled={!isValid}
+                            >
+                                Choose
+                            </button>
 
-                    <h3>Debug State</h3>
-                    <div>
-                        Username: {formValue}
-                        <br />
-                        Loading: {loading.toString()}
-                        <br />
-                        Username Valid: {isValid.toString()}
+                            {/* <h3>Debug State</h3>
+                        <div>
+                            Username: {formValue}
+                            <br />
+                            Loading: {loading.toString()}
+                            <br />
+                            Username Valid: {isValid.toString()}
+                        </div> */}
+                        </form>
                     </div>
-                </form>
-            </section>
+                    <div className={styles.loginSide}>
+                        <LoginUsernameSide className={styles.loginSideFigure} />
+                    </div>
+                </div>
+            </div>
         )
     );
 }
@@ -241,8 +279,8 @@ function UsernameMessage({ username, isValid, loading }) {
     } else if (isValid) {
         return <p className="text-success">{username} is available!</p>;
     } else if (username && !isValid) {
-        return <p className="text-danger">That username is taken!</p>;
+        return <p className="text-danger">That username is not available!</p>;
     } else {
-        return <p></p>;
+        return <p>&nbsp;</p>;
     }
 }

@@ -13,14 +13,20 @@
 }
 
 .headingLg {
+    font-weight: normal;
     font-size: 1.5rem;
     line-height: 1.4;
     margin: 1rem 0;
 }
 
 .headingMd {
+    font-weight: normal;
     font-size: 1.2rem;
     line-height: 1.5;
+}
+
+.subHeading {
+    color: var(--color-text-light);
 }
 
 .borderCircle {
@@ -33,14 +39,15 @@
     margin: 0;
 }
 
-.lightText {
-    color: #666;
-}
-
 .pointer {
     cursor: pointer;
 }
 
 .pushLeft {
     margin-left: auto;
+}
+
+.boxCenter {
+    display: grid;
+    place-items: center;
 }

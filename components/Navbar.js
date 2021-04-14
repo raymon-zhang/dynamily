@@ -29,8 +29,6 @@ export default function Navbar() {
                     </Link>
                 </li>
 
-                {loading && <Loader show={true} />}
-
                 {/* user is signed-in and has username */}
                 {username && (
                     <>
@@ -54,7 +52,7 @@ export default function Navbar() {
                 )}
 
                 {/* user is not signed OR has not created username */}
-                {!username && !loading && (
+                {!username && (
                     <li>
                         <Link href="/login">
                             <button className="btn-blue">Log in</button>

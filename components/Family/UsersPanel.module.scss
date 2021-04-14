@@ -1,0 +1,24 @@
+@use "../../styles/variables" as v;
+
+.leftPanel {
+    margin-top: v.$top-margin;
+    display: flex;
+    height: calc(100vh - #{v.$top-margin});
+    position: sticky;
+    top: v.$top-margin;
+    width: 100%;
+
+    .userPanel {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 0%;
+        overflow: hidden;
+        overflow-y: auto;
+        padding-bottom: 30px;
+
+        .usersContainer {
+            overflow: overlay;
+            overflow-x: hidden;
+        }
+    }
+}
