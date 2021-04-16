@@ -12,7 +12,7 @@ import utilStyles from "@styles/utils.module.scss";
 import Icon from "@icons/icon.svg";
 
 import { UserContext } from "@lib/context";
-import { firestore } from "@lib/firebase";
+import { arrayUnion, firestore } from "@lib/firebase";
 
 import { FamilyLayout } from "@layouts/FamilyPageLayout";
 
@@ -43,6 +43,7 @@ function FamilyDashboard() {
 
 function NewOrJoin() {
     const [newOpen, setNewOpen] = useState(false);
+    const [joinOpen, setJoinOpen] = useState(false);
 
     return (
         <div className={styles.container}>
@@ -69,11 +70,21 @@ function NewOrJoin() {
                     >
                         Create a family
                     </button>
-                    <button className="btn">Join with code</button>
+                    <button
+                        className="btn"
+                        onClick={() => {
+                            setJoinOpen(true);
+                        }}
+                    >
+                        Join with code
+                    </button>
                 </div>
             </div>
             {newOpen && (
                 <CreateNewFamily onRequestClose={() => setNewOpen(false)} />
+            )}
+            {joinOpen && (
+                <JoinFamily onRequestClose={() => setJoinOpen(false)} />
             )}
         </div>
     );
@@ -123,6 +134,56 @@ function CreateNewFamily(props) {
                 <button type="submit" disabled={!isValid}>
                     Create family
                 </button>
+            </form>
+        </Modal>
+    );
+}
+
+function JoinFamily(props) {
+    const { username, user } = useContext(UserContext);
+
+    const [code, setCode] = useState("");
+
+    const joinFamily = async (e) => {
+        e.preventDefault();
+
+        const familyDoc = firestore.collection("families").doc(code);
+        const userDoc = firestore.doc(`users/${user.uid}`);
+
+        const exists = await familyDoc.get().then((doc) => {
+            return doc.exists;
+        });
+
+        if (exists) {
+            const batch = firestore.batch();
+            batch.set(
+                familyDoc,
+                {
+                    members: arrayUnion(username),
+                },
+                { merge: true }
+            );
+
+            batch.set(userDoc, { familyId: code }, { merge: true });
+
+            await batch.commit();
+        }
+    };
+
+    return (
+        <Modal isOpen onRequestClose={props.onRequestClose}>
+            <h3 className={utilStyles.headingLg}>Join Family</h3>
+            <p className={utilStyles.subHeading}>
+                Please give us the join code of your family to join
+            </p>
+            <form onSubmit={joinFamily}>
+                <input
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                    placeholder="Join code"
+                    className="marginSpacing"
+                />
+                <button type="submit">Join family</button>
             </form>
         </Modal>
     );

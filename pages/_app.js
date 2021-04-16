@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 
 import ReactModal from "react-modal";
@@ -46,6 +46,17 @@ function MyApp({ Component, pageProps }) {
     };
 
     ReactModal.setAppElement("#__next");
+
+    const windowLoad = function () {
+        console.log(
+            "Hi there! If you want to contribute to Dynamily, you can contact us at raymonzhang.rz@gmail.com!"
+        );
+    };
+
+    useEffect(() => {
+        window.addEventListener("load", windowLoad);
+        return () => window.removeEventListener("load", windowLoad);
+    });
 
     return (
         <UserContext.Provider value={userData}>
