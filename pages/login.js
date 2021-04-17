@@ -1,6 +1,11 @@
 import Link from "next/link";
 
-import { auth, firestore, googleAuthProvider } from "@lib/firebase";
+import {
+    auth,
+    firestore,
+    googleAuthProvider,
+    serverTimestamp,
+} from "@lib/firebase";
 import { UserContext, GAPIContext } from "@lib/context";
 import { useAuthRedirect } from "@lib/hooks";
 import Metatags from "@components/Metatags";
@@ -98,12 +103,12 @@ function SignInButton(props) {
                 });
             })
             .catch((e) => {
-                toast.error("Error logging in");
+                toast.error("Error signing in!");
                 error = e;
             });
         if (!error) {
             listUpcomingEvents();
-            toast.success("Logged in successfuly");
+            toast.success("Signed in!");
         }
     };
 
@@ -177,6 +182,8 @@ function UsernameForm() {
             displayName: user.displayName,
             email: user.email,
             familyId: null,
+            createdAt: serverTimestamp(),
+            bio: null,
         });
         batch.set(usernameDoc, { uid: user.uid });
 

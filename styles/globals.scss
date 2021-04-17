@@ -234,7 +234,12 @@ button,
     }
 }
 
-input {
+label {
+    color: var(--color-text-light);
+}
+
+input,
+textarea {
     display: inline-block;
     outline: none;
     border: none;
@@ -244,6 +249,7 @@ input {
     width: 100%;
     padding: 10px 20px;
     background-color: var(--color-blue-light);
+    resize: none;
 }
 
 .logo {

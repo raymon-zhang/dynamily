@@ -63,16 +63,33 @@ export default function MiddlePanel({ doc }) {
                 {messages?.docs?.map((doc) => {
                     const message = doc.data();
                     return (
-                        <div key={doc.id} className={styles.message}>
+                        <div
+                            key={doc.id}
+                            className={`${styles.message} ${
+                                message.username === username
+                                    ? styles.messageSent
+                                    : ""
+                            }`}
+                        >
                             <div className={styles.messageTop}>
                                 <User
                                     username={message.username}
                                     options={{ size: "small" }}
+                                    style={{
+                                        color:
+                                            message.username === username
+                                                ? "var(--color-blue)"
+                                                : "var(--color-text)",
+                                    }}
                                 />
                                 <div className={styles.messageMeta}>
                                     {timeSince(message.createdAt?.toDate())}
                                     {message.username === username && (
-                                        <button className={styles.menuButton}>
+                                        <div
+                                            tabIndex={0}
+                                            role="button"
+                                            className={styles.menuButton}
+                                        >
                                             <MoreIcon />
                                             <div className={styles.dropdown}>
                                                 <button
@@ -84,7 +101,7 @@ export default function MiddlePanel({ doc }) {
                                                     Delete
                                                 </button>
                                             </div>
-                                        </button>
+                                        </div>
                                     )}
                                 </div>
                             </div>

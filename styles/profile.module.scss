@@ -1,0 +1,57 @@
+@use "./variables" as v;
+
+.profile {
+    margin-top: v.$top-margin;
+    padding: 30px;
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 756px;
+
+    .userPhoto {
+        width: 120px;
+        height: 120px;
+    }
+
+    .heading {
+        font-size: 1.7rem;
+    }
+
+    .subHeading {
+        margin: 0;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+        font-weight: normal;
+    }
+
+    .bio {
+        margin: 20px 0px;
+        color: var(--color-text-light);
+    }
+
+    .bioButton {
+        margin: 20px 0px;
+        background-color: transparent;
+        padding: 0;
+        color: var(--color-blue);
+        font-size: 1rem;
+    }
+
+    .joinedDate {
+        font-size: 0.8rem;
+    }
+
+    .editButton {
+        background-color: var(--color-green-light);
+        color: var(--color-green);
+        margin: 0;
+        margin-top: 2rem;
+
+        svg {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+        }
+    }
+}

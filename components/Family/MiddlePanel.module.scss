@@ -1,4 +1,4 @@
-@use "../../styles/variables" as v;
+@use "@styles/variables" as v;
 
 .middlePanel {
     width: 100%;
@@ -46,11 +46,19 @@
 
         .message {
             color: var(--color-text);
-            background-color: var(--color-blue-light);
+            background-color: var(--color-bg-accent);
             padding: 20px;
             border-radius: 7px;
-            width: 100%;
+            width: 95%;
+            margin-right: auto;
             margin-bottom: 20px;
+            box-shadow: 0px 2px 5px var(--color-shadow);
+
+            &.messageSent {
+                background-color: var(--color-blue-light);
+                margin-right: 0;
+                margin-left: auto;
+            }
 
             .messageTop {
                 display: flex;
@@ -71,6 +79,11 @@
                         position: relative;
                         width: 18px;
                         height: 18px;
+                        color: var(--color-text);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
 
                         &:focus {
                             outline: none;
