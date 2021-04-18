@@ -66,12 +66,12 @@ function NewOrJoin() {
                         onClick={() => {
                             setNewOpen(true);
                         }}
-                        className="btn-blue"
+                        className="btn-blue btn-circle"
                     >
                         Create a family
                     </button>
                     <button
-                        className="btn"
+                        className="btn-circle btn-blue-light"
                         onClick={() => {
                             setJoinOpen(true);
                         }}
@@ -156,6 +156,8 @@ function JoinFamily(props) {
 
         if (exists) {
             const batch = firestore.batch();
+            batch.set(userDoc, { familyId: code }, { merge: true });
+
             batch.set(
                 familyDoc,
                 {
@@ -163,8 +165,6 @@ function JoinFamily(props) {
                 },
                 { merge: true }
             );
-
-            batch.set(userDoc, { familyId: code }, { merge: true });
 
             await batch.commit();
         }

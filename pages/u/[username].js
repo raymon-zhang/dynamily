@@ -47,8 +47,8 @@ export default function UserProfilePage({ user }) {
     return (
         <main>
             <Metatags
-                title={user.username}
-                description={`${user.username}'s public profile`}
+                title={`${user.username} | Dynamily`}
+                description={`${user.username}'s profile`}
             />
             <div className={styles.profile}>
                 <img

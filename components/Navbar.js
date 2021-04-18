@@ -38,6 +38,7 @@ export default function Navbar() {
                                     signOut(gapiLoaded, router);
                                 }}
                                 disabled={!gapiLoaded}
+                                className="btn-blue-light"
                             >
                                 Sign Out
                             </button>

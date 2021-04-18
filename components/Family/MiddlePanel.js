@@ -1,38 +1,53 @@
 import Link from "next/link";
 
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { useCollection } from "react-firebase-hooks/firestore";
 import ReactMarkdownWithHtml from "react-markdown/with-html";
 
 import { UserContext } from "@lib/context";
 import { serverTimestamp } from "@lib/firebase";
+import { useScreenType } from "@lib/hooks";
 
 import { timeSince } from "@utils/Date";
 
 import User from "@components/User";
-import RichTextEditor from "./RichTextEditor";
+import RichTextEditor, { TextArea } from "./RichTextEditor";
 
 import styles from "./MiddlePanel.module.scss";
 import utilStyles from "@styles/utils.module.scss";
 
 import ChevronRight from "@icons/chevron-right.svg";
+import ChevronDown from "@icons/chevron-down.svg";
 import MoreIcon from "@icons/more-vertical.svg";
 import TrashIcon from "@icons/trash.svg";
 
 export default function MiddlePanel({ doc }) {
-    let user, username;
     const family = doc?.data();
     const messagesRef = doc?.ref?.collection("messages");
-    let messages, loading, error;
+    const [messages, setMessages] = useState([]);
 
-    if (messagesRef) {
-        const query = messagesRef.orderBy("createdAt", "desc").limit(10);
+    const { user, username } = useContext(UserContext);
 
-        [messages, loading, error] = useCollection(query);
+    const query = messagesRef?.orderBy("createdAt", "desc").limit(10);
+    const [first, loading, error] = useCollection(query);
 
-        ({ user, username } = useContext(UserContext));
-    }
+    const screenType = useScreenType();
+
+    useEffect(() => {
+        first && setMessages(first.docs);
+    }, [first]);
+
+    const nextPage = async () => {
+        const query = messagesRef
+            .orderBy("createdAt", "desc")
+            .startAfter(messages[messages.length - 1])
+            .limit(10);
+
+        await query.get().then((documentSnapshots) => {
+            setMessages(messages.concat(documentSnapshots.docs));
+        });
+    };
 
     return (
         <div className={styles.middlePanel}>
@@ -47,20 +62,35 @@ export default function MiddlePanel({ doc }) {
 
             <div className={styles.messagesContainer}>
                 <div className={styles.messageTextEditor}>
-                    <RichTextEditor
-                        placeholder={`What's on your mind, ${
-                            user ? user?.displayName.split(" ")[0] : ""
-                        }?`}
-                        onSubmit={(value) => {
-                            messagesRef.add({
-                                username,
-                                content: value,
-                                createdAt: serverTimestamp(),
-                            });
-                        }}
-                    />
+                    {screenType === "threeCols" ? (
+                        <RichTextEditor
+                            placeholder={`What's on your mind, ${
+                                user ? user?.displayName.split(" ")[0] : ""
+                            }?`}
+                            onSubmit={(value) => {
+                                messagesRef.add({
+                                    username,
+                                    content: value,
+                                    createdAt: serverTimestamp(),
+                                });
+                            }}
+                        />
+                    ) : (
+                        <TextArea
+                            placeholder={`What's on your mind, ${
+                                user ? user?.displayName.split(" ")[0] : ""
+                            }?`}
+                            onSubmit={(value) => {
+                                messagesRef.add({
+                                    username,
+                                    content: value,
+                                    createdAt: serverTimestamp(),
+                                });
+                            }}
+                        />
+                    )}
                 </div>
-                {messages?.docs?.map((doc) => {
+                {messages.map((doc) => {
                     const message = doc.data();
                     return (
                         <div
@@ -111,6 +141,13 @@ export default function MiddlePanel({ doc }) {
                         </div>
                     );
                 })}
+                <button
+                    onClick={nextPage}
+                    className={`${styles.loadMore} btn-circle btn-blue-light`}
+                >
+                    <ChevronDown className={utilStyles.iconLeft} />
+                    Load more
+                </button>
             </div>
         </div>
     );

@@ -203,6 +203,10 @@ button,
         cursor: not-allowed;
     }
 
+    &.btn-circle {
+        border-radius: 9999px;
+    }
+
     &.btn-blue {
         background-color: var(--color-blue);
         color: white;

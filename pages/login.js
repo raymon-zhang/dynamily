@@ -147,7 +147,7 @@ function SignInButton(props) {
                         Privacy policy.
                     </p>
                     <button
-                        className={`${styles.googleBtn} ${utilStyles.borderCircle}`}
+                        className={`${styles.googleBtn} btn-circle`}
                         onClick={gapiLoaded ? signInWithGoogle : null}
                     >
                         <GoogleIcon className={styles.googleIcon} /> Sign in

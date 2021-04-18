@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import isHotkey from "is-hotkey";
 import { Editable, withReact, useSlate, Slate } from "slate-react";
 import {
@@ -277,5 +277,48 @@ const serializeToMd = (node) => {
             return children.join("\n");
     }
 };
+
+export function TextArea({ placeholder, onSubmit }) {
+    const [value, setValue] = useState("");
+
+    const textInput = useRef(null);
+
+    function setHeight() {
+        textInput.current.style.height = "auto";
+        textInput.current.style.height = textInput.current.scrollHeight + "px";
+    }
+
+    useEffect(() => {
+        textInput.current.addEventListener("input", setHeight, false);
+        // return () => {
+        //     textInput.current.removeEventListener("input", setHeight, false);
+        // };
+    });
+
+    return (
+        <>
+            <textarea
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                placeholder={placeholder}
+                id="bio"
+                ref={textInput}
+                rows={1}
+                className={styles.textArea}
+            />
+            <div className={`${styles.menu} ${styles.toolbar}`}>
+                <button
+                    onClick={() => {
+                        onSubmit(value);
+                        setValue("");
+                    }}
+                    className={styles.submit}
+                >
+                    Send
+                </button>
+            </div>
+        </>
+    );
+}
 
 export default RichTextEditor;

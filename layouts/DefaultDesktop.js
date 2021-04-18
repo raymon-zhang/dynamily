@@ -9,37 +9,32 @@ export default function DefaultDesktopLayout({
 }) {
     const screenType = useScreenType();
 
-    var middle = null;
+    let left, right;
 
     switch (screenType) {
         case "threeCols":
-            middle = (
-                <>
-                    {leftPanel}
-                    {children}
-                    {rightPanel}
-                </>
-            );
+            left = leftPanel;
+            right = rightPanel;
             break;
         case "twoCols":
-            middle = (
-                <>
-                    {children}
-                    {rightPanel}
-                </>
-            );
+            left = null;
+            right = rightPanel;
             break;
         case "oneCols":
-            middle = <>{children}</>;
+            left = null;
+            right = null;
             break;
         case "fullscreen":
-            middle = <>{children}</>;
+            left = null;
+            right = null;
             break;
     }
 
     return (
         <div className={`${styles.gridContainer} ${styles[screenType]}`}>
-            {middle}
+            {left}
+            {children}
+            {right}
         </div>
     );
 }

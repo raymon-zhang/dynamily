@@ -39,3 +39,13 @@
     display: flex;
     align-items: center;
 }
+
+.textArea {
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
+
+    &::placeholder {
+        color: var(--color-text-light);
+    }
+}
