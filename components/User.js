@@ -9,7 +9,6 @@ import utilStyles from "@styles/utils.module.scss";
 export default function User({
     username,
     options = { size: "big" },
-    style,
     userData = null,
 }) {
     const [user, setUser] = useState(null);
@@ -30,13 +29,14 @@ export default function User({
                     className={`${styles.user} ${
                         options.size === "small" ? styles.userSmall : ""
                     }`}
-                    style={style}
                 >
                     <img
                         src={user?.photoURL}
-                        className={`${styles.userPhoto} ${utilStyles.borderCircle}`}
+                        className={`${styles.userPhoto} ${
+                            options.size === "photo" ? styles.noMarginRight : ""
+                        } ${utilStyles.borderCircle}`}
                     />
-                    {user?.username}
+                    {options.size !== "photo" && user?.username}
                 </div>
             </a>
         </Link>

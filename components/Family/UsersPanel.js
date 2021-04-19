@@ -18,3 +18,21 @@ export default function UsersPanel({ members }) {
         </div>
     );
 }
+
+export function SmallUsersPanel({ members }) {
+    return (
+        <div className={styles.leftPanel}>
+            <div className={styles.userPanel}>
+                <div className={styles.usersContainer}>
+                    {members?.map((member) => (
+                        <User
+                            key={member}
+                            username={member}
+                            options={{ size: "photo" }}
+                        />
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+}

@@ -4,6 +4,7 @@ import styles from "./DefaultDesktop.module.scss";
 
 export default function DefaultDesktopLayout({
     leftPanel,
+    smallLeftPanel,
     rightPanel,
     children,
 }) {
@@ -17,11 +18,11 @@ export default function DefaultDesktopLayout({
             right = rightPanel;
             break;
         case "twoCols":
-            left = null;
+            left = smallLeftPanel;
             right = rightPanel;
             break;
         case "oneCols":
-            left = null;
+            left = smallLeftPanel;
             right = null;
             break;
         case "fullscreen":
