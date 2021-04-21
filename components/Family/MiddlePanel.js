@@ -3,11 +3,13 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 
 import { useCollection } from "react-firebase-hooks/firestore";
-import ReactMarkdownWithHtml from "react-markdown/with-html";
+import ReactMarkdown from "react-markdown";
+import htmlParser from "react-markdown/plugins/html-parser";
+
+import { isMobile } from "react-device-detect";
 
 import { UserContext } from "@lib/context";
 import { serverTimestamp } from "@lib/firebase";
-import { useScreenType } from "@lib/hooks";
 
 import { timeSince } from "@utils/Date";
 
@@ -32,8 +34,6 @@ export default function MiddlePanel({ doc }) {
     const query = messagesRef?.orderBy("createdAt", "desc").limit(10);
     const [first, loading, error] = useCollection(query);
 
-    const screenType = useScreenType();
-
     useEffect(() => {
         first && setMessages(first.docs);
     }, [first]);
@@ -49,6 +49,10 @@ export default function MiddlePanel({ doc }) {
         });
     };
 
+    const parseHtml = htmlParser({
+        isValidNode: (node) => node.name === "u",
+    });
+
     return (
         <div className={styles.middlePanel}>
             <div className={styles.stickyHeader}>
@@ -62,7 +66,7 @@ export default function MiddlePanel({ doc }) {
 
             <div className={styles.messagesContainer}>
                 <div className={styles.messageTextEditor}>
-                    {screenType === "threeCols" ? (
+                    {!isMobile ? (
                         <RichTextEditor
                             placeholder={`What's on your mind, ${
                                 user ? user?.displayName.split(" ")[0] : ""
@@ -70,6 +74,7 @@ export default function MiddlePanel({ doc }) {
                             onSubmit={(value) => {
                                 messagesRef.add({
                                     username,
+                                    photoURL: user.photoURL,
                                     content: value,
                                     createdAt: serverTimestamp(),
                                 });
@@ -83,6 +88,7 @@ export default function MiddlePanel({ doc }) {
                             onSubmit={(value) => {
                                 messagesRef.add({
                                     username,
+                                    photoURL: user.photoURL,
                                     content: value,
                                     createdAt: serverTimestamp(),
                                 });
@@ -102,16 +108,32 @@ export default function MiddlePanel({ doc }) {
                             }`}
                         >
                             <div className={styles.messageTop}>
-                                <User
-                                    username={message.username}
-                                    options={{ size: "small" }}
-                                    style={{
-                                        color:
-                                            message.username === username
-                                                ? "var(--color-blue)"
-                                                : "var(--color-text)",
-                                    }}
-                                />
+                                <Link
+                                    href={
+                                        message?.username
+                                            ? `/u/${message.username}`
+                                            : "/"
+                                    }
+                                >
+                                    <a>
+                                        <div
+                                            className={styles.userAvatar}
+                                            style={{
+                                                color:
+                                                    message.username ===
+                                                    username
+                                                        ? "var(--color-blue)"
+                                                        : "var(--color-text)",
+                                            }}
+                                        >
+                                            <img
+                                                src={message?.photoURL}
+                                                className={`${styles.userPhoto} ${utilStyles.borderCircle}`}
+                                            />
+                                            {message.username}
+                                        </div>
+                                    </a>
+                                </Link>
                                 <div className={styles.messageMeta}>
                                     {timeSince(message.createdAt?.toDate())}
                                     {message.username === username && (
@@ -135,9 +157,12 @@ export default function MiddlePanel({ doc }) {
                                     )}
                                 </div>
                             </div>
-                            <ReactMarkdownWithHtml allowDangerousHtml>
+                            <ReactMarkdown
+                                astPlugins={[parseHtml]}
+                                allowDangerousHtml
+                            >
                                 {message.content}
-                            </ReactMarkdownWithHtml>
+                            </ReactMarkdown>
                         </div>
                     );
                 })}

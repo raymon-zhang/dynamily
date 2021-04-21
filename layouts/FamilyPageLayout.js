@@ -5,6 +5,7 @@ import DefaultDesktopLayout from "@layouts/DefaultDesktop";
 import Metatags from "@components/Metatags";
 import AuthCheck from "@components/AuthCheck";
 import UsersPanel, { SmallUsersPanel } from "@components/Family/UsersPanel";
+import RightPanel from "@components/Family/RightPanel";
 import MiddlePanel from "@components/Family/MiddlePanel";
 
 import { firestore } from "@lib/firebase";
@@ -24,13 +25,13 @@ export function FamilyLayout({ family }) {
     const familyDoc = firestore.collection("families").doc(family);
     const [snapshot, loading, error] = useDocument(familyDoc);
 
+    const data = snapshot?.data();
+
     return (
         <DefaultDesktopLayout
-            leftPanel={<UsersPanel members={snapshot?.data()?.members} />}
-            smallLeftPanel={
-                <SmallUsersPanel members={snapshot?.data()?.members} />
-            }
-            rightPanel={<div>Right</div>}
+            leftPanel={<UsersPanel members={data?.members} />}
+            smallLeftPanel={<SmallUsersPanel members={data?.members} />}
+            rightPanel={<RightPanel members={data?.members} />}
         >
             <MiddlePanel doc={snapshot} />
         </DefaultDesktopLayout>

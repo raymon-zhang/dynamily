@@ -250,7 +250,7 @@ const serializeToMd = (node) => {
             string = `*${string}*`;
         }
         if (node.underline) {
-            string = `<ins>${string}</ins>`;
+            string = `<u>${string}</u>`;
         }
         if (node.code) {
             string = `\`${string}\``;
