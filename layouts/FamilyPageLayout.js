@@ -31,7 +31,7 @@ export function FamilyLayout({ family }) {
         <DefaultDesktopLayout
             leftPanel={<UsersPanel members={data?.members} />}
             smallLeftPanel={<SmallUsersPanel members={data?.members} />}
-            rightPanel={<RightPanel members={data?.members} />}
+            rightPanel={<RightPanel />}
         >
             <MiddlePanel doc={snapshot} />
         </DefaultDesktopLayout>

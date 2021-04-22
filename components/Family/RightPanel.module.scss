@@ -19,6 +19,43 @@
         .elementsContainer {
             overflow: overlay;
             overflow-x: hidden;
+            margin-top: 20px;
+
+            & > * + * {
+                margin-top: 20px;
+            }
+
+            .element {
+                border-radius: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 40px 20px;
+
+                svg {
+                    margin-right: 10px;
+                }
+
+                // &.colorYellow {
+                //     background-color: var(--color-yellow-light);
+                //     color: var(--color-yellow);
+                // }
+
+                // &.colorPurple {
+                background-color: var(--color-purple-light);
+                color: var(--color-purple);
+                // }
+
+                // &.colorGreen {
+                //     background-color: var(--color-green-light);
+                //     color: var(--color-green);
+                // }
+
+                // &.colorRed {
+                // background-color: var(--color-red-light);
+                // color: var(--color-red);
+                // }
+            }
         }
     }
 }
