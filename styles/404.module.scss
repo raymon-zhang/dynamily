@@ -1,0 +1,5 @@
+@use "./variables" as v;
+
+.container {
+    margin-top: v.$top-margin;
+}

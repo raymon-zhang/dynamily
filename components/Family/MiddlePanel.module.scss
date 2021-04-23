@@ -66,12 +66,6 @@
                 }
             }
 
-            &.messageSent {
-                background-color: var(--color-blue-light);
-                margin-right: 0;
-                margin-left: auto;
-            }
-
             .messageTop {
                 display: flex;
                 align-items: center;
@@ -143,6 +137,17 @@
                             opacity: 1;
                         }
                     }
+                }
+            }
+
+            &.messageSent {
+                background-color: var(--color-blue-light);
+                color: #08090a;
+                margin-right: 0;
+                margin-left: auto;
+
+                .menuButton {
+                    color: #08090a !important;
                 }
             }
         }

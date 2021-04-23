@@ -56,12 +56,9 @@ export default function MiddlePanel({ doc }) {
     return (
         <div className={styles.middlePanel}>
             <div className={styles.stickyHeader}>
-                <Link href="/family">
-                    <a className={styles.headerContent}>
-                        <h3 className={utilStyles.headingLg}>{family?.name}</h3>
-                        <ChevronRight />
-                    </a>
-                </Link>
+                <div className={styles.headerContent}>
+                    <h3 className={utilStyles.headingLg}>{family?.name}</h3>
+                </div>
             </div>
 
             <div className={styles.messagesContainer}>

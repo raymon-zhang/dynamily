@@ -110,8 +110,6 @@ function EditProfile({ userDoc, setOpen, ...props }) {
 
         const userDoc = firestore.doc(`users/${user.uid}`);
 
-        console.log(bio);
-
         await userDoc.set(
             {
                 photoURL,

@@ -1,6 +1,8 @@
 import Link from "next/link";
 
 import ImageIcon from "@icons/image.svg";
+import ShoppingIcon from "@icons/shopping-cart.svg";
+import TodoIcon from "@icons/check-square.svg";
 
 import styles from "./RightPanel.module.scss";
 import utilStyles from "@styles/utils.module.scss";
@@ -16,19 +18,19 @@ export default function RightPanel({}) {
                         <a
                             className={`${styles.element} ${styles.colorPurple}`}
                         >
-                            <ImageIcon /> Family Gallery
+                            <ImageIcon /> Family gallery
                         </a>
                     </Link>
                     <Link href="/gallery">
                         <a className={`${styles.element} ${styles.colorGreen}`}>
-                            <ImageIcon /> Family Gallery
+                            <TodoIcon /> Todo list
                         </a>
                     </Link>
                     <Link href="/gallery">
                         <a
                             className={`${styles.element} ${styles.colorYellow}`}
                         >
-                            <ImageIcon /> Family Gallery
+                            <ShoppingIcon /> Shopping list
                         </a>
                     </Link>
                     <Link href="/gallery">

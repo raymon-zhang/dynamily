@@ -3,6 +3,8 @@ import Head from "next/head";
 
 import ReactModal from "react-modal";
 
+import withDarkMode, { useDarkMode } from "next-dark-mode";
+
 import "@styles/globals.scss";
 
 import Navbar from "@components/Navbar";
@@ -45,6 +47,8 @@ function MyApp({ Component, pageProps }) {
             });
     };
 
+    const { darkModeActive, switchToDarkMode } = useDarkMode();
+
     ReactModal.setAppElement("#__next");
 
     const windowLoad = function () {
@@ -81,12 +85,14 @@ function MyApp({ Component, pageProps }) {
                         crossOrigin=""
                     />
                 </Head>
-                <Navbar />
-                <Component {...pageProps} />
-                <Toasts />
+                <div className={darkModeActive ? "dark layout" : "light layout"}>
+                    <Navbar />
+                    <Component {...pageProps} />
+                    <Toasts />
+                </div>
             </GAPIContext.Provider>
         </UserContext.Provider>
     );
 }
 
-export default MyApp;
+export default withDarkMode(MyApp);

@@ -1,13 +1,13 @@
 .button {
     cursor: pointer;
-    color: #cccccc;
-    fill: #cccccc;
+    color: var(--color-gray);
+    fill: var(--color-gray);
 }
 
 .active {
     cursor: pointer;
-    color: black;
-    fill: black;
+    color: var(--color-text);
+    fill: var(--color-text);
 }
 
 .menu {
@@ -34,7 +34,7 @@
 
 .toolbar {
     padding-top: 20px;
-    border-top: 2px solid #eeeeee;
+    border-top: 2px solid var(--color-bg-accent);
     margin-top: 20px;
     display: flex;
     align-items: center;

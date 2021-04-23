@@ -5,20 +5,21 @@
     height: 8px;
 }
 
-// ::-webkit-scrollbar-track {
-//     background-color: #0000001a;
-// }
+::-webkit-scrollbar-track {
+    background-color: #cccccc;
+}
 
 ::-webkit-scrollbar-thumb {
-    background-color: #0000001a;
+    background-color: #aaaaaa;
     border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #00000033;
+    background-color: #888888;
 }
 
 :root {
+    --color-navbar: #ffffffcc;
     --color-base: #ffffff;
     --color-bg: #fbfdff;
     --color-bg-accent: #efefef;
@@ -27,6 +28,8 @@
     --color-blue: #314bce;
     --color-blue-light: #edf0fc;
     --color-blue-lighter: #ccd2ec;
+    --color-lightblue: #1e86ff;
+    --color-lightblue-light: #edf4fc;
     --color-red: #ff897e;
     --color-red-light: #fcf1f0;
     --color-green: #10ba77;
@@ -66,40 +69,60 @@ body {
     font-family: Glacial Indifference, -apple-system, BlinkMacSystemFont,
         Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
         Helvetica Neue, sans-serif;
+}
+
+.layout {
     background-color: var(--color-bg);
     color: var(--color-text);
+    min-height: 100vh;
 }
 
-.lightTheme {
+.light {
+    --color-navbar: #ffffffcc;
+    --color-base: #ffffff;
     --color-bg: #fbfdff;
     --color-bg-accent: #efefef;
     --color-text: #08090a;
-    --color-text-light: #838991;
+    --color-text-light: #80959b;
     --color-blue: #314bce;
-    --color-blue-light: #eaedfa;
+    --color-blue-light: #edf0fc;
     --color-blue-lighter: #ccd2ec;
+    --color-lightblue: #1e86ff;
+    --color-lightblue-light: #edf4fc;
     --color-red: #ff897e;
     --color-red-light: #fcf1f0;
     --color-green: #10ba77;
     --color-green-light: #ebfaf4;
+    --color-yellow: #f1cc23;
+    --color-yellow-light: #fcf9e9;
+    --color-purple: #8b66e9;
+    --color-purple-light: #f4f0fc;
     --color-gray: #d0d5da;
     --color-shadow: #0000000a;
 }
 
-.darkTheme {
-    --color-bg: #fbfdff;
-    --color-bg-accent: #efefef;
-    --color-text: #08090a;
-    --color-text-light: #838991;
+.dark {
+    --color-navbar: #000000cc;
+    --color-base: #000000;
+    --color-bg: #191919;
+    --color-bg-accent: #444444;
+    --color-text: #f2f4f7;
+    --color-text-light: #777b8f;
     --color-blue: #314bce;
-    --color-blue-light: #eaedfa;
-    --color-blue-lighter: #ccd2ec;
+    --color-blue-light: #b4c1f3;
+    --color-blue-lighter: #a9b6f1;
+    --color-lightblue: #1e86ff;
+    --color-lightblue-light: #b5d0f0;
     --color-red: #ff897e;
-    --color-red-light: #fcf1f0;
+    --color-red-light: #f1c3bf;
     --color-green: #10ba77;
-    --color-green-light: #ebfaf4;
-    --color-gray: #d0d5da;
-    --color-shadow: #0000000a;
+    --color-green-light: #b2f1d8;
+    --color-yellow: #f1cc23;
+    --color-yellow-light: #f5edbe;
+    --color-purple: #8b66e9;
+    --color-purple-light: #c0a9ee;
+    --color-gray: #646668;
+    --color-shadow: #00000067;
 }
 
 a {
@@ -142,7 +165,7 @@ main {
 .navbar {
     height: 70px;
     width: 100%;
-    background-color: #ffffffcc;
+    background-color: var(--color-navbar);
     color: var(--color-text);
     position: fixed;
     top: 0;
@@ -163,14 +186,107 @@ main {
 
         li {
             border-radius: 50%;
-        }
-    }
 
-    img {
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        cursor: pointer;
+            .profileButton {
+                cursor: pointer;
+                position: relative;
+
+                &:focus {
+                    outline: none;
+                }
+
+                img {
+                    border-radius: 50%;
+                    width: 50px;
+                    height: 50px;
+                }
+
+                .dropdown {
+                    visibility: hidden;
+                    opacity: 0;
+                    transition: opacity var(--timing);
+                    position: absolute;
+                    top: 125%;
+                    right: 0;
+                    background-color: var(--color-base);
+                    box-shadow: 0px 5px 10px var(--color-shadow);
+                    border-radius: 5px;
+                    padding: 20px;
+                    cursor: default;
+                }
+
+                &:focus-within {
+                    .dropdown {
+                        visibility: visible;
+                        opacity: 1;
+
+                        .dropdownItem {
+                            display: inline-block;
+                            border-radius: 0;
+                            margin: 0;
+                            padding: 20px;
+                            background-color: transparent;
+                            display: flex;
+                            align-items: center;
+                            font-size: 1rem;
+                            font-weight: normal;
+                            white-space: nowrap;
+
+                            svg {
+                                margin-right: 20px;
+                                width: 18px;
+                                height: 18px;
+                            }
+
+                            .switch {
+                                position: relative;
+                                display: inline-block;
+                                width: 30px;
+                                height: 17px;
+                                margin-left: 20px;
+
+                                input {
+                                    opacity: 0;
+                                    width: 0;
+                                    height: 0;
+
+                                    &:checked + .slider {
+                                        background-color: var(--color-blue);
+                                        &:before {
+                                            transform: translateX(13px);
+                                        }
+                                    }
+                                }
+
+                                .slider {
+                                    position: absolute;
+                                    cursor: pointer;
+                                    top: 0;
+                                    left: 0;
+                                    right: 0;
+                                    bottom: 0;
+                                    background-color: #cccccc;
+                                    transition: background-color 400ms;
+                                    border-radius: 17px;
+
+                                    &::before {
+                                        position: absolute;
+                                        content: "";
+                                        height: 13px;
+                                        width: 13px;
+                                        left: 2px;
+                                        bottom: 2px;
+                                        background-color: white;
+                                        transition: transform 400ms;
+                                        border-radius: 50%;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
