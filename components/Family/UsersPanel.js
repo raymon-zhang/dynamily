@@ -11,7 +11,7 @@ export default function UsersPanel({ members }) {
                 <p className={utilStyles.subHeading}>Family members</p>
                 <div className={styles.usersContainer}>
                     {members?.map((member) => (
-                        <User key={member} username={member} />
+                        <User key={member.username} userData={member} />
                     ))}
                 </div>
             </div>
@@ -26,8 +26,8 @@ export function SmallUsersPanel({ members }) {
                 <div className={styles.usersContainer}>
                     {members?.map((member) => (
                         <User
-                            key={member}
-                            username={member}
+                            key={member.username}
+                            userData={member}
                             options={{ size: "photo" }}
                         />
                     ))}

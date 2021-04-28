@@ -3,6 +3,7 @@ import Link from "next/link";
 import ImageIcon from "@icons/image.svg";
 import ShoppingIcon from "@icons/shopping-cart.svg";
 import TodoIcon from "@icons/check-square.svg";
+import CalendarIcon from "@icons/check-square.svg";
 
 import styles from "./RightPanel.module.scss";
 import utilStyles from "@styles/utils.module.scss";
@@ -14,28 +15,24 @@ export default function RightPanel({}) {
                 <h3 className={utilStyles.headingLg}>Family elements</h3>
                 <p className={utilStyles.subHeading}>Manage your family</p>
                 <div className={styles.elementsContainer}>
-                    <Link href="/gallery">
-                        <a
-                            className={`${styles.element} ${styles.colorPurple}`}
-                        >
+                    <Link href="/family/gallery">
+                        <a className={styles.element}>
                             <ImageIcon /> Family gallery
                         </a>
                     </Link>
-                    <Link href="/gallery">
-                        <a className={`${styles.element} ${styles.colorGreen}`}>
+                    <Link href="/family/todos">
+                        <a className={styles.element}>
                             <TodoIcon /> Todo list
                         </a>
                     </Link>
-                    <Link href="/gallery">
-                        <a
-                            className={`${styles.element} ${styles.colorYellow}`}
-                        >
+                    <Link href="/family/shopping">
+                        <a className={styles.element}>
                             <ShoppingIcon /> Shopping list
                         </a>
                     </Link>
-                    <Link href="/gallery">
-                        <a className={`${styles.element} ${styles.colorRed}`}>
-                            <ImageIcon /> Family Gallery
+                    <Link href="/family/calendar">
+                        <a className={styles.element}>
+                            <CalendarIcon /> Family calendar
                         </a>
                     </Link>
                 </div>

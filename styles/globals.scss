@@ -112,7 +112,7 @@ body {
     --color-blue-light: #b4c1f3;
     --color-blue-lighter: #a9b6f1;
     --color-lightblue: #1e86ff;
-    --color-lightblue-light: #b5d0f0;
+    --color-lightblue-light: #a2c7f3;
     --color-red: #ff897e;
     --color-red-light: #f1c3bf;
     --color-green: #10ba77;
@@ -197,8 +197,8 @@ main {
 
                 img {
                     border-radius: 50%;
-                    width: 50px;
-                    height: 50px;
+                    width: 48px;
+                    height: 48px;
                 }
 
                 .dropdown {
@@ -374,6 +374,10 @@ textarea {
     padding: 10px 20px;
     background-color: var(--color-blue-light);
     resize: none;
+
+    &[type="file"] {
+        display: none;
+    }
 }
 
 .logo {

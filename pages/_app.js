@@ -13,7 +13,9 @@ import Toasts from "@components/Toasts";
 import { UserContext, GAPIContext } from "@lib/context";
 import { useUserData } from "@lib/hooks";
 
-function MyApp({ Component, pageProps }) {
+import FamilyPageLayout from "@layouts/FamilyPageLayout";
+
+function MyApp({ Component, pageProps, router }) {
     const userData = useUserData();
 
     const [isGAPILoaded, setIsGAPILoaded] = useState(false);
@@ -85,9 +87,17 @@ function MyApp({ Component, pageProps }) {
                         crossOrigin=""
                     />
                 </Head>
-                <div className={darkModeActive ? "dark layout" : "light layout"}>
+                <div
+                    className={darkModeActive ? "dark layout" : "light layout"}
+                >
                     <Navbar />
-                    <Component {...pageProps} />
+                    {router.pathname.startsWith("/family") ? (
+                        <FamilyPageLayout>
+                            <Component {...pageProps} />
+                        </FamilyPageLayout>
+                    ) : (
+                        <Component {...pageProps} />
+                    )}
                     <Toasts />
                 </div>
             </GAPIContext.Provider>

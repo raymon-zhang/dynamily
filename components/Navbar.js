@@ -85,9 +85,6 @@ export default function Navbar() {
                                     </button>
                                 </div>
                             </div>
-                            {/* <Link href={`/u/${username}`}>
-                                <img src={user?.photoURL} />
-                            </Link> */}
                         </li>
                     </>
                 )}

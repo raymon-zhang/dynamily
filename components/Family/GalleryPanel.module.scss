@@ -1,0 +1,181 @@
+@use "@styles/variables" as v;
+
+.galleryPanel {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .stickyHeader {
+        padding-top: v.$top-margin;
+        position: sticky;
+        width: 100%;
+        top: 0;
+        background-color: var(--color-bg);
+        z-index: 1;
+
+        .headerContent {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+
+            svg {
+                background-color: var(--color-blue-light);
+                color: var(--color-blue);
+                border-radius: 5px;
+                padding: 6px;
+                width: 36px;
+                height: 36px;
+            }
+        }
+    }
+
+    .galleryContainer {
+        margin-bottom: 30px;
+        padding: 0px 10px;
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+        .uploadButton {
+            margin: 0;
+            padding: 0;
+            border-radius: 8px;
+            display: block;
+            background-color: var(--color-bg-accent);
+        }
+
+        .imageContainer {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 8px;
+
+            .imageWrapper {
+                background-color: white;
+            }
+
+            .imagePlaceholder {
+                position: absolute;
+                // z-index: -1;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+
+                background-image: linear-gradient(
+                        90deg,
+                        rgb(60, 68, 50) 10%,
+                        rgb(48, 62, 28) 10% 20%,
+                        rgb(54, 71, 44) 20% 30%,
+                        rgb(157, 166, 173) 30% 40%,
+                        rgb(184, 201, 239) 40% 50%,
+                        rgb(163, 184, 226) 50% 60%,
+                        rgb(153, 170, 181) 60% 70%,
+                        rgb(167, 182, 189) 70% 80%,
+                        rgb(133, 155, 121) 80% 90%,
+                        rgb(91, 105, 81) 90% 100%
+                    ),
+                    linear-gradient(
+                        90deg,
+                        rgb(59, 69, 47) 10%,
+                        rgb(42, 56, 26) 10% 20%,
+                        rgb(114, 123, 120) 20% 30%,
+                        rgb(196, 206, 229) 30% 40%,
+                        rgb(202, 213, 234) 40% 50%,
+                        rgb(160, 172, 167) 50% 60%,
+                        rgb(109, 128, 86) 60% 70%,
+                        rgb(86, 108, 59) 70% 80%,
+                        rgb(82, 112, 48) 80% 90%,
+                        rgb(84, 98, 69) 90% 100%
+                    ),
+                    linear-gradient(
+                        90deg,
+                        rgb(51, 61, 36) 10%,
+                        rgb(51, 63, 42) 10% 20%,
+                        rgb(111, 122, 112) 20% 30%,
+                        rgb(206, 214, 227) 30% 40%,
+                        rgb(142, 157, 139) 40% 50%,
+                        rgb(91, 113, 64) 50% 60%,
+                        rgb(66, 92, 38) 60% 70%,
+                        rgb(54, 71, 40) 70% 80%,
+                        rgb(79, 107, 48) 80% 90%,
+                        rgb(92, 110, 53) 90% 100%
+                    ),
+                    linear-gradient(
+                        90deg,
+                        rgb(39, 50, 25) 10%,
+                        rgb(44, 59, 29) 10% 20%,
+                        rgb(75, 92, 47) 20% 30%,
+                        rgb(99, 116, 61) 30% 40%,
+                        rgb(88, 107, 54) 40% 50%,
+                        rgb(88, 110, 53) 50% 60%,
+                        rgb(76, 103, 39) 60% 70%,
+                        rgb(107, 133, 51) 70% 80%,
+                        rgb(115, 147, 58) 80% 90%,
+                        rgb(110, 147, 54) 90% 100%
+                    ),
+                    linear-gradient(
+                        90deg,
+                        rgb(33, 44, 21) 10%,
+                        rgb(46, 59, 32) 10% 20%,
+                        rgb(73, 92, 49) 20% 30%,
+                        rgb(80, 98, 46) 30% 40%,
+                        rgb(97, 116, 53) 40% 50%,
+                        rgb(110, 129, 57) 50% 60%,
+                        rgb(119, 141, 59) 60% 70%,
+                        rgb(125, 144, 69) 70% 80%,
+                        rgb(130, 155, 70) 80% 90%,
+                        rgb(124, 156, 61) 90% 100%
+                    ),
+                    linear-gradient(
+                        90deg,
+                        rgb(26, 40, 14) 10%,
+                        rgb(49, 64, 39) 10% 20%,
+                        rgb(75, 95, 63) 20% 30%,
+                        rgb(90, 105, 78) 30% 40%,
+                        rgb(106, 117, 110) 40% 50%,
+                        rgb(112, 123, 112) 50% 60%,
+                        rgb(100, 108, 84) 60% 70%,
+                        rgb(101, 103, 84) 70% 80%,
+                        rgb(91, 104, 69) 80% 90%,
+                        rgb(96, 107, 69) 90% 100%
+                    ),
+                    linear-gradient(
+                        90deg,
+                        rgb(78, 88, 56) 10%,
+                        rgb(72, 78, 51) 10% 20%,
+                        rgb(80, 85, 64) 20% 30%,
+                        rgb(97, 105, 90) 30% 40%,
+                        rgb(95, 102, 85) 40% 50%,
+                        rgb(94, 104, 83) 50% 60%,
+                        rgb(62, 77, 48) 60% 70%,
+                        rgb(64, 74, 46) 70% 80%,
+                        rgb(79, 85, 58) 80% 90%,
+                        rgb(75, 84, 63) 90% 100%
+                    ),
+                    linear-gradient(
+                        90deg,
+                        rgb(81, 80, 57) 10%,
+                        rgb(78, 82, 58) 10% 20%,
+                        rgb(129, 132, 128) 20% 30%,
+                        rgb(161, 163, 170) 30% 40%,
+                        rgb(110, 113, 105) 40% 50%,
+                        rgb(81, 87, 76) 50% 60%,
+                        rgb(66, 76, 66) 60% 70%,
+                        rgb(62, 69, 55) 70% 80%,
+                        rgb(101, 99, 83) 80% 90%,
+                        rgb(82, 85, 73) 90% 100%
+                    );
+                background-position: 0 0, 0 14.285714285714285%,
+                    0 28.57142857142857%, 0 42.857142857142854%,
+                    0 57.14285714285714%, 0 71.42857142857143%,
+                    0 85.71428571428571%, 0 100%;
+                background-size: 100% 12.5%;
+                background-repeat: no-repeat;
+                filter: blur(24px);
+                transform: scale(1.2);
+            }
+        }
+    }
+}
