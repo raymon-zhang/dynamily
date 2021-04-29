@@ -11,6 +11,8 @@ import { STATE_CHANGED, storage } from "@lib/firebase";
 import styles from "./GalleryPanel.module.scss";
 import utilStyles from "@styles/utils.module.scss";
 
+import ImageIcon from "@icons/image.svg";
+
 export default function GalleryPanel({ doc }) {
     const { username } = useContext(UserContext);
 
@@ -119,6 +121,7 @@ export default function GalleryPanel({ doc }) {
             <div className={styles.galleryContainer}>
                 {!uploading && (
                     <label className={styles.uploadButton}>
+                        <ImageIcon />
                         Upload image
                         <input
                             type="file"
