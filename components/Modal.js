@@ -25,7 +25,7 @@ const customStyles = {
             maxWidth: 530,
         },
     },
-    userPreview: {
+    imageView: {
         overlay: {
             backgroundColor: "rgba(0, 0, 0, 0.6)",
             zIndex: 1000,
@@ -41,9 +41,9 @@ const customStyles = {
             transform: "translate(-50%, -50%)",
             backgroundColor: "var(--color-base)",
             border: "none",
-            maxHeight: "80vh",
+            height: "80vh",
             width: "90%",
-            maxWidth: 435,
+            maxWidth: "720px",
         },
     },
 };
@@ -56,7 +56,10 @@ export default function Modal({ children, variant = "default", ...props }) {
             style={customStyles[variant]}
             {...props}
         >
-            <CloseButton onClick={(e) => props?.onRequestClose?.(e)} />
+            <CloseButton
+                onClick={(e) => props?.onRequestClose?.(e)}
+                color={variant === "imageView" ? "white" : "black"}
+            />
             <div>{children}</div>
         </ReactModal>
     );

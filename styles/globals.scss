@@ -38,7 +38,7 @@
     --color-yellow-light: #fcf9e9;
     --color-purple: #8b66e9;
     --color-purple-light: #f4f0fc;
-    --color-gray: #d0d5da;
+    --color-gray: #dddddd;
     --color-shadow: #0000000a;
 
     --top-margin: 100px;
@@ -97,7 +97,7 @@ body {
     --color-yellow-light: #fcf9e9;
     --color-purple: #8b66e9;
     --color-purple-light: #f4f0fc;
-    --color-gray: #d0d5da;
+    --color-gray: #dddddd;
     --color-shadow: #0000000a;
 }
 
@@ -231,6 +231,7 @@ main {
                             font-size: 1rem;
                             font-weight: normal;
                             white-space: nowrap;
+                            color: var(--color-text);
 
                             svg {
                                 margin-right: 20px;
@@ -292,9 +293,9 @@ main {
 
 button,
 .btn {
-    background-color: var(--color-gray);
+    background-color: var(--color-blue-light);
     border: none;
-    color: var(--color-text);
+    color: var(--color-blue);
     padding: 0.7rem 2.2rem;
     display: flex;
     align-items: center;
@@ -303,7 +304,7 @@ button,
     text-decoration: none;
     font-family: inherit;
     font-size: 0.9rem;
-    border-radius: 0.4rem;
+    border-radius: 9999px;
     cursor: pointer;
     margin: 0.5rem 1rem 0.5rem 0;
     transition: filter var(--timing);
