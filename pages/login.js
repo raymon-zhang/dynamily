@@ -6,7 +6,7 @@ import {
     googleAuthProvider,
     serverTimestamp,
 } from "@lib/firebase";
-import { UserContext, GAPIContext } from "@lib/context";
+import { UserContext } from "@lib/context";
 import { useAuthRedirect } from "@lib/hooks";
 import Metatags from "@components/Metatags";
 import Loader from "@components/Loader";
@@ -56,79 +56,16 @@ export default function Login(props) {
 
 // Sign in with Google button
 function SignInButton(props) {
-    function listUpcomingEvents() {
-        gapi.client.calendar.events
-            .list({
-                calendarId: "primary",
-                timeMin: new Date().toISOString(),
-                showDeleted: false,
-                singleEvents: true,
-                maxResults: 10,
-                orderBy: "startTime",
-            })
-            .then(function (response) {
-                var events = response.result.items;
-                console.log("Upcoming events:");
-
-                if (events.length > 0) {
-                    for (let i = 0; i < events.length; i++) {
-                        var event = events[i];
-                        var when = event.start.dateTime;
-                        if (!when) {
-                            when = event.start.date;
-                        }
-                        console.log(event.summary + " (" + when + ")");
-                    }
-                } else {
-                    console.log("No upcoming events found.");
-                }
-            });
-    }
-
     const signInWithGoogle = async () => {
-        var error;
-        await gapi.auth2
-            .getAuthInstance()
-            .signIn()
-            .then((googleUser) => {
-                var unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
-                    unsubscribe();
-
-                    if (!isUserEqual(googleUser, firebaseUser)) {
-                        var credential = googleAuthProvider.credential(
-                            googleUser.getAuthResponse().id_token
-                        );
-                        return auth.signInWithCredential(credential);
-                    }
-                });
-            })
+        await auth
+            .signInWithPopup(googleAuthProvider)
             .catch((e) => {
-                toast.error("Error signing in!");
-                error = e;
+                toast.error("Oops! There was an error.");
+            })
+            .then(() => {
+                toast.success("Signed in!");
             });
-        if (!error) {
-            listUpcomingEvents();
-            toast.success("Signed in!");
-        }
     };
-
-    const isUserEqual = (googleUser, firebaseUser) => {
-        if (firebaseUser) {
-            var providerData = firebaseUser.providerData;
-            for (var i = 0; i < providerData.length; i++) {
-                if (
-                    providerData[i].providerId ===
-                        firebase.auth.GoogleAuthProvider.PROVIDER_ID &&
-                    providerData[i].uid === googleUser.getBasicProfile().getId()
-                ) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    };
-
-    const gapiLoaded = useContext(GAPIContext);
 
     return (
         <div className={`${utilStyles.boxCenter} ${styles.loginOuter}`}>
@@ -148,7 +85,7 @@ function SignInButton(props) {
                     </p>
                     <button
                         className={`${styles.googleBtn} btn-circle`}
-                        onClick={gapiLoaded ? signInWithGoogle : null}
+                        onClick={signInWithGoogle}
                     >
                         <GoogleIcon className={styles.googleIcon} /> Sign in
                         with Google
@@ -259,15 +196,6 @@ function UsernameForm() {
                             >
                                 Choose
                             </button>
-
-                            {/* <h3>Debug State</h3>
-                        <div>
-                            Username: {formValue}
-                            <br />
-                            Loading: {loading.toString()}
-                            <br />
-                            Username Valid: {isValid.toString()}
-                        </div> */}
                         </form>
                     </div>
                     <div className={styles.loginSide}>

@@ -4,10 +4,8 @@ import { useContext } from "react";
 
 import { useDarkMode } from "next-dark-mode";
 
-import { UserContext, GAPIContext } from "@lib/context";
-import { auth, signOut } from "@lib/firebase";
-
-import Loader from "@components/Loader";
+import { UserContext } from "@lib/context";
+import { signOut } from "@lib/firebase";
 
 import utilStyles from "@styles/utils.module.scss";
 
@@ -21,13 +19,8 @@ import LogoutIcon from "@icons/log-out.svg";
 export default function Navbar() {
     const { user, username, loading } = useContext(UserContext);
 
-    const {
-        darkModeActive,
-        switchToDarkMode,
-        switchToLightMode,
-    } = useDarkMode();
-
-    const gapiLoaded = useContext(GAPIContext);
+    const { darkModeActive, switchToDarkMode, switchToLightMode } =
+        useDarkMode();
 
     const router = useRouter();
 
@@ -75,9 +68,8 @@ export default function Navbar() {
                                     </button>
                                     <button
                                         onClick={() => {
-                                            signOut(gapiLoaded, router);
+                                            signOut(router);
                                         }}
-                                        disabled={!gapiLoaded}
                                         className="dropdownItem"
                                     >
                                         <LogoutIcon />
