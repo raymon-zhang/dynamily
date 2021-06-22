@@ -13,7 +13,6 @@ import { serverTimestamp } from "@lib/firebase";
 
 import { timeSince } from "@utils/Date";
 
-import User from "@components/User";
 import RichTextEditor, { TextArea } from "./RichTextEditor";
 
 import styles from "./MiddlePanel.module.scss";
@@ -166,13 +165,19 @@ export default function MiddlePanel({ doc }) {
                         </div>
                     );
                 })}
-                <button
-                    onClick={nextPage}
-                    className={`${styles.loadMore} btn-circle btn-blue-light`}
-                >
-                    <ChevronDown className={utilStyles.iconLeft} />
-                    Load more
-                </button>
+                {messages.length > 0 ? (
+                    <button
+                        onClick={nextPage}
+                        className={`${styles.loadMore} btn-circle btn-blue-light`}
+                    >
+                        <ChevronDown className={utilStyles.iconLeft} />
+                        Load more
+                    </button>
+                ) : (
+                    <p className={styles.noMessages}>
+                        No messages yet. Send one to get started...
+                    </p>
+                )}
             </div>
         </div>
     );
