@@ -8,21 +8,25 @@
     <img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License MIT" />
 </p>
 
-<p align="center">
+<div align="center">
     <strong>Dynamily helps you manage and connect your family's everyday life. </strong>
-</p>
+</div>
 
-<p align=center>
-    <a href="https://dynamily.tk/login"><strong>Sign up today 🡭</strong></a>
-</p>
+<div align=center>
+    <sub>💬 Realtime chat &nbsp;·&nbsp; 🖼️ Gallery &nbsp;·&nbsp; ☑️ Todos &nbsp;·&nbsp; 🛒 Shopping list</sub>
+</div>
 <br>
-<p align=center>
-    💬Realtime chat              · 🖼️Gallery · ☑️Todos · 🛒Shopping list
-</p>
-    
-<p align="center">
+<div align=center>
+    <a href="https://dynamily.tk/login"><strong>Sign up today 🡭</strong></a>
+</div>
+<br>
+<div align="center">
     <sub>Created by <a href="https://github.com/raymon-zhang">Raymon Zhang</a></sub>
-</p>
+</div>
+
+## About
+
+It can be difficult to keep your family organized. Dynamily empowers your family to manage its everyday life and stay connected with realtime chat, a family gallery, and advanced todos and shopping lists.
 
 ## Getting Started
 
