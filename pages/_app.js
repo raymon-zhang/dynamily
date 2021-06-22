@@ -3,7 +3,7 @@ import Head from "next/head";
 
 import ReactModal from "react-modal";
 
-import withDarkMode, { useDarkMode } from "next-dark-mode";
+import { ThemeProvider } from "next-themes";
 
 import "@styles/globals.scss";
 
@@ -17,8 +17,6 @@ import FamilyPageLayout from "@layouts/FamilyPageLayout";
 
 function MyApp({ Component, pageProps, router }) {
     const userData = useUserData();
-
-    const { darkModeActive, switchToDarkMode } = useDarkMode();
 
     ReactModal.setAppElement("#__next");
 
@@ -49,7 +47,7 @@ function MyApp({ Component, pageProps, router }) {
                     crossOrigin=""
                 />
             </Head>
-            <div className={darkModeActive ? "dark layout" : "light layout"}>
+            <ThemeProvider>
                 <Navbar />
                 {router.pathname.startsWith("/family") ? (
                     <FamilyPageLayout>
@@ -59,9 +57,9 @@ function MyApp({ Component, pageProps, router }) {
                     <Component {...pageProps} />
                 )}
                 <Toasts />
-            </div>
+            </ThemeProvider>
         </UserContext.Provider>
     );
 }
 
-export default withDarkMode(MyApp);
+export default MyApp;

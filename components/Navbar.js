@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 
-import { useDarkMode } from "next-dark-mode";
+import { useTheme } from "next-themes";
 
 import { UserContext } from "@lib/context";
 import { signOut } from "@lib/firebase";
@@ -19,8 +19,8 @@ import LogoutIcon from "@icons/log-out.svg";
 export default function Navbar() {
     const { user, username, loading } = useContext(UserContext);
 
-    const { darkModeActive, switchToDarkMode, switchToLightMode } =
-        useDarkMode();
+    const { theme, setTheme } = useTheme();
+    const darkModeActive = theme === "dark";
 
     const router = useRouter();
 
@@ -59,8 +59,8 @@ export default function Navbar() {
                                                 checked={darkModeActive}
                                                 onChange={() => {
                                                     darkModeActive
-                                                        ? switchToLightMode()
-                                                        : switchToDarkMode();
+                                                        ? setTheme("light")
+                                                        : setTheme("dark");
                                                 }}
                                             />
                                             <span className="slider round"></span>
