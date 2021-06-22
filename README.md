@@ -1,34 +1,52 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<a href="https://dynamily.tk">
+    <p align="center">
+        <img height=120 alt="Dynamily" src="assets/logo.svg" />
+    </p>
+</a>
+
+<p align="center">
+    <img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License MIT" />
+</p>
+
+<p align="center">
+    <strong>Dynamily helps you manage and connect your family's everyday life. </strong>
+</p>
+
+<p align=center>
+    <a href="https://dynamily.tk/login"><strong>Sign up today 🡭</strong></a>
+</p>
+<br>
+<p align=center>
+    💬Realtime chat              · 🖼️Gallery · ☑️Todos · 🛒Shopping list
+</p>
+    
+<p align="center">
+    <sub>Created by <a href="https://github.com/raymon-zhang">Raymon Zhang</a></sub>
+</p>
 
 ## Getting Started
 
-First, run the development server:
+First, clone this repository.
+
+**We do not support [npm](https://www.npmjs.com). You must use [yarn](https://yarnpkg.com).**
+You can install it with:
 
 ```bash
-npm run dev
-# or
+npm i -g yarn
+```
+
+Run
+
+```bash
+yarn
+```
+
+And then you can start the development server:
+
+```bash
 yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
