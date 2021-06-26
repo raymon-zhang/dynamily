@@ -1,5 +1,5 @@
-import MiddlePanel from "@components/Family/MiddlePanel";
+import TodosPanel from "@components/Family/TodosPanel";
 
 export default function Family({ ...props }) {
-    return <MiddlePanel {...props} />;
+    return <TodosPanel {...props} />;
 }

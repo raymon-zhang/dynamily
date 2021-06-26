@@ -5,31 +5,6 @@
     display: flex;
     flex-direction: column;
 
-    .stickyHeader {
-        padding-top: v.$top-margin;
-        position: sticky;
-        width: 100%;
-        top: 0;
-        background-color: var(--color-bg);
-        z-index: 1;
-
-        .headerContent {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 30px;
-
-            svg {
-                background-color: var(--color-blue-light);
-                color: var(--color-blue);
-                border-radius: 5px;
-                padding: 9px;
-                width: 36px;
-                height: 36px;
-            }
-        }
-    }
-
     .galleryContainer {
         margin-bottom: 30px;
         padding: 0px 10px;

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 
 import toast from "react-hot-toast";
@@ -10,6 +9,7 @@ import Jimp from "jimp/es";
 
 import Modal from "@components/Modal";
 import Loader from "@components/Loader";
+import PanelStickyHeader from "./PanelStickyHeader";
 
 import { UserContext } from "@lib/context";
 import { STATE_CHANGED, storage } from "@lib/firebase";
@@ -19,7 +19,6 @@ import utilStyles from "@styles/utils.module.scss";
 
 import ImageIcon from "@icons/image.svg";
 import TrashIcon from "@icons/trash.svg";
-import HomeIcon from "@icons/home.svg";
 
 export default function GalleryPanel({ doc }) {
     const { username } = useContext(UserContext);
@@ -159,14 +158,7 @@ export default function GalleryPanel({ doc }) {
 
     return (
         <div className={styles.galleryPanel}>
-            <div className={styles.stickyHeader}>
-                <Link href="/family">
-                    <a className={styles.headerContent}>
-                        <h3 className={utilStyles.headingLg}>Family gallery</h3>
-                        <HomeIcon />
-                    </a>
-                </Link>
-            </div>
+            <PanelStickyHeader>Family gallery</PanelStickyHeader>
 
             <div className={styles.galleryContainer}>
                 {!uploading && (

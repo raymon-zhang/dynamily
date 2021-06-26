@@ -14,11 +14,11 @@ import { serverTimestamp } from "@lib/firebase";
 import { timeSince } from "@utils/Date";
 
 import RichTextEditor, { TextArea } from "./RichTextEditor";
+import PanelStickyHeader from "./PanelStickyHeader";
 
 import styles from "./MiddlePanel.module.scss";
 import utilStyles from "@styles/utils.module.scss";
 
-import HomeIcon from "@icons/home.svg";
 import ChevronDown from "@icons/chevron-down.svg";
 import MoreIcon from "@icons/more-vertical.svg";
 import TrashIcon from "@icons/trash.svg";
@@ -54,14 +54,7 @@ export default function MiddlePanel({ doc }) {
 
     return (
         <div className={styles.middlePanel}>
-            <div className={styles.stickyHeader}>
-                <Link href="/family">
-                    <a className={styles.headerContent}>
-                        <h3 className={utilStyles.headingLg}>{family?.name}</h3>
-                        <HomeIcon />
-                    </a>
-                </Link>
-            </div>
+            <PanelStickyHeader>{family?.name}</PanelStickyHeader>
 
             <div className={styles.messagesContainer}>
                 <div className={styles.messageTextEditor}>

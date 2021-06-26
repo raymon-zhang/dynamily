@@ -10,7 +10,9 @@ export default function CloseButton({ color, onClick }) {
     return (
         <button
             onClick={onClick}
-            className={styles.buttonContainer}
+            className={`${styles.buttonContainer} ${
+                color !== "black" ? styles.imageView : ""
+            }`}
             style={{ color: color || "black" }}
         >
             <CloseIcon />
