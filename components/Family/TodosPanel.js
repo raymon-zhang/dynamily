@@ -155,7 +155,7 @@ function EditTodo({ todoDoc, familyDoc, setOpen, ...props }) {
         todoData.assigned.map((user) => ({ value: user, label: user })) ?? []
     );
     const [todoDeadline, setTodoDeadline] = useState(
-        todoData.deadline?.toDate() ?? new Date()
+        todoData.deadline?.toDate() ?? null
     );
 
     const colorOptions = [
@@ -189,7 +189,7 @@ function EditTodo({ todoDoc, familyDoc, setOpen, ...props }) {
             primary50: `var(--color-${todoColor.value}-light)`,
             neutral0: "var(--color-base)",
             neutral20: "var(--color-gray)",
-            neutral80: "var(--color-text)",
+            neutral80: "#08090a",
         },
     });
 
@@ -280,6 +280,7 @@ function EditTodo({ todoDoc, familyDoc, setOpen, ...props }) {
                     onChange={(date) => setTodoDeadline(date)}
                     id="todoDeadline"
                     className="marginSpacing"
+                    placeholderText="Pick a date..."
                 />
                 <button type="submit">Save</button>
             </form>

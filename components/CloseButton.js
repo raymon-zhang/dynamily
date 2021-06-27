@@ -11,9 +11,9 @@ export default function CloseButton({ color, onClick }) {
         <button
             onClick={onClick}
             className={`${styles.buttonContainer} ${
-                color !== "black" ? styles.imageView : ""
+                color !== "var(--color-text)" ? styles.imageView : ""
             }`}
-            style={{ color: color || "black" }}
+            style={{ color: color || "var(--color-text)" }}
         >
             <CloseIcon />
         </button>

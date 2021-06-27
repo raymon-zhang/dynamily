@@ -52,7 +52,7 @@ export const defaultSelectTheme = (theme) => ({
         dangerLight: "var(--color-red-light)",
         neutral0: "var(--color-base)",
         neutral20: "var(--color-gray)",
-        neutral50: "var(--color-text)",
-        neutral80: "var(--color-text)",
+        neutral50: "#08090a",
+        neutral80: "#08090a",
     },
 });

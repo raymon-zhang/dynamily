@@ -59,7 +59,7 @@ export default function Modal({ children, variant = "default", ...props }) {
         >
             <CloseButton
                 onClick={(e) => props?.onRequestClose?.(e)}
-                color={variant === "imageView" ? "white" : "black"}
+                color={variant === "imageView" ? "white" : "var(--color-text)"}
             />
             <div>{children}</div>
         </ReactModal>
