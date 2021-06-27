@@ -117,9 +117,8 @@ function TodoItem({ todoDoc, familyDoc }) {
                 </div>
                 <ul className={styles.assignedUsersList}>
                     {todo.assigned?.map((assign) => (
-                        <li className={styles.assignedUser}>
+                        <li key={assign} className={styles.assignedUser}>
                             <User
-                                key={assign}
                                 username={assign}
                                 options={{ size: "photo" }}
                                 style={{ padding: 0 }}
