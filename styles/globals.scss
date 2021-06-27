@@ -356,9 +356,14 @@ textarea {
     padding: 10px 20px;
     background-color: var(--color-blue-light);
     resize: none;
+    transition: box-shadow 100ms;
 
     &[type="file"] {
         display: none;
+    }
+
+    &:focus {
+        box-shadow: 0px 0px 0px 1px var(--color-blue);
     }
 }
 
