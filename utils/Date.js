@@ -48,3 +48,7 @@ export function timeSince(date) {
 
     return interval + " " + intervalType + " ago";
 }
+
+export function toMmDdYyyy(date) {
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+}

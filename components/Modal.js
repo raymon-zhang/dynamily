@@ -23,6 +23,7 @@ const customStyles = {
             maxHeight: "80vh",
             width: "90%",
             maxWidth: 530,
+            overflow: "visible",
         },
     },
     imageView: {

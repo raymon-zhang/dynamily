@@ -2,6 +2,7 @@
 
 .todosPanel {
     width: 100%;
+    min-width: 0;
     display: flex;
     flex-direction: column;
 
@@ -20,6 +21,7 @@
                 font-size: 1.1rem;
                 display: flex;
                 align-items: center;
+                width: 100%;
 
                 &.todoblue {
                     background-color: var(--color-blue-light);
@@ -45,10 +47,10 @@
                     --todo-color: var(--color-purple);
                 }
 
-                &.todoassigned {
+                &.todoAssigned {
                     background-color: var(--color-red) !important;
                     color: var(--color-base) !important;
-                    --todo-color: var(--color-blue);
+                    --todo-color: var(--color-base);
 
                     .todoCheckmark:focus svg {
                         color: var(--color-red);
@@ -67,6 +69,7 @@
                     font-size: 0;
                     color: unset;
                     transition: background-color 300ms;
+                    flex: 0 0 24px;
 
                     svg {
                         width: 100%;
@@ -86,6 +89,32 @@
                             opacity: 1;
                             color: var(--color-base);
                         }
+                    }
+                }
+
+                .todoDescription {
+                    flex: 1;
+                    overflow-wrap: break-word;
+                    width: 100%;
+                    min-width: 0;
+                    cursor: pointer;
+
+                    .todoMeta {
+                        font-size: 0.9rem;
+                        overflow-wrap: normal;
+                        margin-top: 10px;
+                    }
+                }
+
+                .assignedUsersList {
+                    list-style: none;
+                    display: flex;
+                    justify-content: flex-end;
+                    margin: 0;
+                    padding: 0;
+
+                    .assignedUser {
+                        margin-left: 10px;
                     }
                 }
             }
