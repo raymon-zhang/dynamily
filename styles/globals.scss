@@ -396,3 +396,17 @@ blockquote {
 [data-slate-editor] > * + * {
     margin-top: 1em;
 }
+
+.react-datepicker-wrapper,
+.react-datepicker__input-container {
+    display: block !important;
+    width: 100% !important;
+}
+
+.react-datepicker {
+    border: none !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    font-family: unset !important;
+    box-shadow: 0px 5px 10px 5px var(--color-shadow) !important;
+}

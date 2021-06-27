@@ -4,6 +4,9 @@ import { useCollection } from "react-firebase-hooks/firestore";
 
 import Select from "react-select";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import PanelStickyHeader from "./PanelStickyHeader";
 import Modal from "@components/Modal";
 import User from "@components/User";
@@ -152,6 +155,9 @@ function EditTodo({ todoDoc, familyDoc, setOpen, ...props }) {
     const [todoAssign, setTodoAssign] = useState(
         todoData.assigned.map((user) => ({ value: user, label: user })) ?? []
     );
+    const [todoDeadline, setTodoDeadline] = useState(
+        todoData.deadline?.toDate() ?? new Date()
+    );
 
     const colorOptions = [
         { value: "blue", label: "Blue" },
@@ -225,6 +231,7 @@ function EditTodo({ todoDoc, familyDoc, setOpen, ...props }) {
                 name: todoName,
                 color: todoColor.value,
                 assigned: todoAssign.map((assign) => assign.value),
+                deadline: todoDeadline,
             },
             { merge: true }
         );
@@ -268,7 +275,13 @@ function EditTodo({ todoDoc, familyDoc, setOpen, ...props }) {
                     className="marginSpacing"
                     id="todoAssign"
                 />
-
+                <label htmlFor="todoDeadline">Deadline</label>
+                <DatePicker
+                    selected={todoDeadline}
+                    onChange={(date) => setTodoDeadline(date)}
+                    id="todoDeadline"
+                    className="marginSpacing"
+                />
                 <button type="submit">Save</button>
             </form>
         </Modal>
