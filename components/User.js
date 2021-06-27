@@ -34,7 +34,7 @@ export default function User({
 
     return (
         <Link href={user?.username ? `/u/${user.username}` : "/"}>
-            <a>
+            <a title={user?.username}>
                 <div
                     className={`${styles.user} ${
                         options.size === "small" ? styles.userSmall : ""
