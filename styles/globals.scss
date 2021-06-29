@@ -417,6 +417,20 @@ blockquote {
     top: 4px !important;
 }
 
+.react-datepicker__triangle::before {
+    content: none !important;
+}
+
+.react-datepicker__triangle::after {
+    .react-datepicker-popper[data-placement^="top"] & {
+        border-top-color: var(--color-base) !important;
+    }
+
+    .react-datepicker-popper[data-placement^="bottom"] & {
+        border-bottom-color: var(--color-blue-light) !important;
+    }
+}
+
 .react-datepicker__navigation-icon::before {
     border-color: var(--color-blue) !important;
 }
