@@ -311,17 +311,17 @@ button,
 
     &.btn-blue {
         background-color: var(--color-blue);
-        color: white;
+        color: var(--color-base);
     }
 
     &.btn-red {
         background-color: var(--color-red);
-        color: white;
+        color: var(--color-base);
     }
 
     &.btn-green {
         background-color: var(--color-green);
-        color: white;
+        color: var(--color-base);
     }
 
     &.btn-blue-light {
@@ -364,7 +364,7 @@ textarea {
     }
 
     &:focus {
-        box-shadow: 0px 0px 0px 1px var(--color-blue);
+        box-shadow: inset 0px 0px 0px 1px var(--color-blue);
     }
 }
 
