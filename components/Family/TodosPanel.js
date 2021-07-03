@@ -21,15 +21,36 @@ import styles from "./TodosPanel.module.scss";
 import utilStyles from "@styles/utils.module.scss";
 
 import CheckIcon from "@icons/check.svg";
+import ChevronRight from "@icons/chevron-right.svg";
 
 export default function TodosPanel({ doc }) {
     const [newTodo, setNewTodo] = useState("");
+    const [currentView, setCurrentView] = useState({
+        value: "notDone",
+        label: "Not Done",
+    });
+
+    const { username } = useContext(UserContext);
 
     const todosRef = doc?.ref?.collection("todos");
 
-    const query = todosRef
-        ?.where("done", "==", false)
-        ?.orderBy("createdAt", "desc");
+    let query;
+
+    if (currentView.value === "notDone") {
+        query = todosRef
+            ?.where("done", "==", false)
+            ?.orderBy("createdAt", "desc");
+    } else if (currentView.value === "done") {
+        query = todosRef
+            ?.where("done", "==", true)
+            ?.orderBy("createdAt", "desc");
+    } else if (currentView.value === "assigned") {
+        query = todosRef
+            ?.where("assigned", "array-contains", username)
+            ?.where("done", "==", false)
+            ?.orderBy("createdAt", "desc");
+    }
+
     const [todos, loading, error] = useCollection(query);
 
     const addNewTodo = (e) => {
@@ -45,21 +66,61 @@ export default function TodosPanel({ doc }) {
         setNewTodo("");
     };
 
+    const viewOptions = [
+        { value: "notDone", label: "Not done" },
+        { value: "done", label: "Done" },
+        { value: "assigned", label: "Assigned to me" },
+    ];
+
+    const viewSelectStyles = {
+        ...defaultSelectStyles,
+        control: (provided) => ({
+            ...provided,
+            backgroundColor: "transparent",
+        }),
+        valueContainer: (provided) => ({
+            ...provided,
+            padding: "5px 20px",
+        }),
+    };
+
     return (
         <div className={styles.todosPanel}>
             <PanelStickyHeader>Family todos</PanelStickyHeader>
 
             <div className={styles.todosContainer}>
-                <form onSubmit={addNewTodo}>
-                    <input
-                        value={newTodo}
-                        onChange={(e) => {
-                            setNewTodo(e.target.value);
-                        }}
-                        placeholder="Add a new todo..."
-                        maxLength={255}
+                <div className={styles.viewSelector}>
+                    <label htmlFor="currentView">Filter: </label>
+                    <Select
+                        value={currentView}
+                        onChange={(selectedView) =>
+                            setCurrentView(selectedView)
+                        }
+                        options={viewOptions}
+                        styles={viewSelectStyles}
+                        theme={(theme) => ({
+                            ...defaultSelectTheme(theme),
+                            borderRadius: 5,
+                        })}
+                        id="currentView"
+                        className={styles.viewSelect}
                     />
-                </form>
+                </div>
+                {currentView.value === "notDone" && (
+                    <form onSubmit={addNewTodo} className={styles.newTodo}>
+                        <input
+                            value={newTodo}
+                            onChange={(e) => {
+                                setNewTodo(e.target.value);
+                            }}
+                            placeholder="Add a new todo..."
+                            maxLength={255}
+                        />
+                        <button type="submit" className="btn-blue">
+                            <ChevronRight />
+                        </button>
+                    </form>
+                )}
                 <ul className={styles.todosList}>
                     {todos?.docs?.map((todoDoc) => (
                         <TodoItem
@@ -69,6 +130,11 @@ export default function TodosPanel({ doc }) {
                         />
                     ))}
                 </ul>
+                {!todos?.docs?.length && (
+                    <p className={styles.noMessages}>
+                        No todos here. Create one to get started...
+                    </p>
+                )}
             </div>
         </div>
     );
@@ -88,17 +154,23 @@ function TodoItem({ todoDoc, familyDoc }) {
     if (todo.assigned.includes(username)) {
         todoMeta += ` · Assigned to you`;
     }
+    if (todo?.deadline?.toDate() < new Date()) {
+        todoMeta += ` · Overdue`;
+    }
 
     return (
         <>
             <li
                 className={`${styles.todo} ${styles[`todo${todo.color}`]} ${
-                    todo.assigned.includes(username) ? styles.todoAssigned : ""
+                    todo.assigned.includes(username) ||
+                    todo?.deadline?.toDate() < new Date()
+                        ? styles.todoDanger
+                        : ""
                 }`}
             >
                 <button
                     onClick={() => {
-                        todoDoc.ref.set({ done: true }, { merge: true });
+                        todoDoc.ref.set({ done: !todo.done }, { merge: true });
                     }}
                     className={styles.todoCheckmark}
                 >
@@ -240,7 +312,19 @@ function EditTodo({ todoDoc, familyDoc, setOpen, ...props }) {
 
     return (
         <Modal isOpen onRequestClose={props.onRequestClose}>
-            <h3 className={utilStyles.headingLg}>Edit todo</h3>
+            <div className={styles.todoFormTop}>
+                <h3 className={utilStyles.headingLg}>Edit todo</h3>
+                <button
+                    onClick={(e) => {
+                        e.preventDefault();
+                        todoDoc.ref.delete();
+                        setOpen(false);
+                    }}
+                    className="btn-red-light"
+                >
+                    Delete todo
+                </button>
+            </div>
 
             <form onSubmit={save}>
                 <label htmlFor="todoName">Name</label>
