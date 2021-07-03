@@ -8,7 +8,6 @@ export const defaultSelectStyles = {
         ...provided,
         border: "none",
         backgroundColor: "var(--color-blue-light)",
-        borderRadius: 20,
     }),
     valueContainer: (provided) => ({
         ...provided,
@@ -42,7 +41,7 @@ export const defaultSelectStyles = {
 
 export const defaultSelectTheme = (theme) => ({
     ...theme,
-    borderRadius: 10,
+    borderRadius: 20,
     colors: {
         ...theme.colors,
         primary: "var(--color-blue)",
