@@ -1,5 +1,5 @@
 import TodosPanel from "@components/Family/TodosPanel";
 
-export default function Family({ ...props }) {
+export default function Todos({ ...props }) {
     return <TodosPanel {...props} />;
 }
