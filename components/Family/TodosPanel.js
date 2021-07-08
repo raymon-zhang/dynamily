@@ -77,6 +77,11 @@ export default function TodosPanel({ doc }) {
         control: (provided) => ({
             ...provided,
             backgroundColor: "transparent",
+            borderWidth: "2px",
+            borderColor: "var(--color-blue-lighter)",
+            "&:hover": {
+                borderColor: "var(--color-blue)",
+            },
         }),
         valueContainer: (provided) => ({
             ...provided,
@@ -154,7 +159,7 @@ function TodoItem({ todoDoc, familyDoc }) {
     if (todo.assigned.includes(username)) {
         todoMeta += ` · Assigned to you`;
     }
-    if (todo?.deadline?.toDate() < new Date()) {
+    if (todo?.deadline?.toDate() < new Date() && !todo?.done) {
         todoMeta += ` · Overdue`;
     }
 
@@ -163,7 +168,7 @@ function TodoItem({ todoDoc, familyDoc }) {
             <li
                 className={`${styles.todo} ${styles[`todo${todo.color}`]} ${
                     todo.assigned.includes(username) ||
-                    todo?.deadline?.toDate() < new Date()
+                    (todo?.deadline?.toDate() < new Date() && !todo?.done)
                         ? styles.todoDanger
                         : ""
                 }`}
