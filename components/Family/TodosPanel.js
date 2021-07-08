@@ -86,7 +86,7 @@ export default function TodosPanel({ doc }) {
 
     return (
         <div className={styles.todosPanel}>
-            <PanelStickyHeader>Family todos</PanelStickyHeader>
+            <PanelStickyHeader page="todos">Family todos</PanelStickyHeader>
 
             <div className={styles.todosContainer}>
                 <div className={styles.viewSelector}>

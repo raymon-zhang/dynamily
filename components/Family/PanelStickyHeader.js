@@ -8,6 +8,7 @@ import MessageIcon from "@icons/message.svg";
 import GalleryIcon from "@icons/image.svg";
 import TodoIcon from "@icons/check-square.svg";
 import ShoppingIcon from "@icons/shopping-cart.svg";
+import ChevronDown from "@icons/chevron-down.svg";
 
 export default function PanelStickyHeader({ page, children }) {
     const pageOptions = {
@@ -29,15 +30,25 @@ export default function PanelStickyHeader({ page, children }) {
         },
     };
     const currentPage = pageOptions[page];
-    delete pageOptions[page];
+
+    const pages = ["messages", "gallery", "todos", "shopping"];
+    pages.splice(pages.indexOf(page), 1);
 
     return (
         <div className={styles.stickyHeader}>
             <div className={styles.headerContent}>
                 <h3 className={utilStyles.headingLg}>{children}</h3>
-                <Link href={currentPage.url}>
-                    <a>{currentPage.icon}</a>
-                </Link>
+                <div tabIndex={0} role="button" className={styles.menuButton}>
+                    {currentPage.icon}
+                    <ChevronDown />
+                    <div className={styles.dropdown}>
+                        {pages.map((page) => (
+                            <Link key={page} href={pageOptions[page].url}>
+                                <a>{pageOptions[page].icon}</a>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     );

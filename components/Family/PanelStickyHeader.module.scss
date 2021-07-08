@@ -13,14 +13,50 @@
         align-items: center;
         justify-content: space-between;
         margin-bottom: 30px;
+        position: relative;
 
-        svg {
+        .menuButton {
+            cursor: pointer;
             background-color: var(--color-blue-light);
             color: var(--color-blue);
             border-radius: 5px;
             padding: 9px;
-            width: 36px;
-            height: 36px;
+            padding-right: 5px;
+            font-size: 0;
+            margin-left: 10px;
+
+            & > svg + svg {
+                margin-left: 5px;
+            }
+
+            svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            .dropdown {
+                visibility: hidden;
+                opacity: 0;
+                background-color: var(--color-blue-light);
+                box-shadow: 0px 5px 10px var(--color-shadow);
+                position: absolute;
+                top: 100%;
+                right: 0;
+                border-radius: 5px;
+                transition: opacity var(--timing);
+
+                a {
+                    display: block;
+                    cursor: pointer;
+                    font-size: 0;
+                    padding: 12px;
+                }
+            }
+
+            &:focus-within .dropdown {
+                visibility: visible;
+                opacity: 1;
+            }
         }
     }
 }

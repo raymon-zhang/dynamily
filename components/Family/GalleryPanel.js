@@ -158,7 +158,7 @@ export default function GalleryPanel({ doc }) {
 
     return (
         <div className={styles.galleryPanel}>
-            <PanelStickyHeader>Family gallery</PanelStickyHeader>
+            <PanelStickyHeader page="gallery">Family gallery</PanelStickyHeader>
 
             <div className={styles.galleryContainer}>
                 {!uploading && (

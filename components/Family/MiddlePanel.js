@@ -54,7 +54,9 @@ export default function MiddlePanel({ doc }) {
 
     return (
         <div className={styles.middlePanel}>
-            <PanelStickyHeader>{family?.name}</PanelStickyHeader>
+            <PanelStickyHeader page="messages">
+                {family?.name}
+            </PanelStickyHeader>
 
             <div className={styles.messagesContainer}>
                 <div className={styles.messageTextEditor}>
