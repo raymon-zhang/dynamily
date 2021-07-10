@@ -136,7 +136,7 @@ export default function TodosPanel({ doc }) {
                     ))}
                 </ul>
                 {!todos?.docs?.length && (
-                    <p className={styles.noMessages}>
+                    <p className={styles.noTodos}>
                         No todos here. Create one to get started...
                     </p>
                 )}
