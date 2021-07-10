@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 import ReactModal from "react-modal";
 
 import { ThemeProvider } from "next-themes";
+
+import NProgress from "nprogress";
 
 import "@styles/globals.scss";
 
@@ -15,8 +18,29 @@ import { useUserData } from "@lib/hooks";
 
 import FamilyPageLayout from "@layouts/FamilyPageLayout";
 
-function MyApp({ Component, pageProps, router }) {
+function MyApp({ Component, pageProps }) {
     const userData = useUserData();
+
+    const router = useRouter();
+
+    useEffect(() => {
+        const handleStart = () => {
+            NProgress.start();
+        };
+        const handleStop = () => {
+            NProgress.done();
+        };
+
+        router.events.on("routeChangeStart", handleStart);
+        router.events.on("routeChangeComplete", handleStop);
+        router.events.on("routeChangeError", handleStop);
+
+        return () => {
+            router.events.off("routeChangeStart", handleStart);
+            router.events.off("routeChangeComplete", handleStop);
+            router.events.off("routeChangeError", handleStop);
+        };
+    }, [router]);
 
     ReactModal.setAppElement("#__next");
 
