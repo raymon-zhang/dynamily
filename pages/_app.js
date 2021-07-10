@@ -46,6 +46,9 @@ function MyApp({ Component, pageProps, router }) {
                     as="font"
                     crossOrigin=""
                 />
+                {process.env.NODE_ENV === "development" && (
+                    <script>self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;</script>
+                )}
             </Head>
             <ThemeProvider>
                 <Navbar />
