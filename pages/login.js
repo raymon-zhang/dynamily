@@ -61,6 +61,7 @@ function SignInButton(props) {
             .signInWithPopup(googleAuthProvider)
             .catch((e) => {
                 toast.error("Oops! There was an error.");
+                return Promise.reject(e);
             })
             .then(() => {
                 toast.success("Signed in!");
