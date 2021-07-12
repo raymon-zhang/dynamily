@@ -72,23 +72,6 @@ export default function TodosPanel({ doc }) {
         { value: "assigned", label: "Assigned to me" },
     ];
 
-    const viewSelectStyles = {
-        ...defaultSelectStyles,
-        control: (provided) => ({
-            ...provided,
-            backgroundColor: "transparent",
-            borderWidth: "2px",
-            borderColor: "var(--color-blue-lighter)",
-            "&:hover": {
-                borderColor: "var(--color-blue)",
-            },
-        }),
-        valueContainer: (provided) => ({
-            ...provided,
-            padding: "5px 20px",
-        }),
-    };
-
     return (
         <div className={styles.todosPanel}>
             <PanelStickyHeader page="todos">Family todos</PanelStickyHeader>
@@ -102,11 +85,8 @@ export default function TodosPanel({ doc }) {
                             setCurrentView(selectedView)
                         }
                         options={viewOptions}
-                        styles={viewSelectStyles}
-                        theme={(theme) => ({
-                            ...defaultSelectTheme(theme),
-                            borderRadius: 5,
-                        })}
+                        styles={defaultSelectStyles}
+                        theme={defaultSelectTheme}
                         id="currentView"
                         className={styles.viewSelect}
                     />
