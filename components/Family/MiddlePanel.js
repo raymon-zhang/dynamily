@@ -109,7 +109,7 @@ export default function MiddlePanel({ doc }) {
                                             : "/"
                                     }
                                 >
-                                    <a>
+                                    <a className={styles.messageUser}>
                                         <div
                                             className={styles.userAvatar}
                                             style={{
