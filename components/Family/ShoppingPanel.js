@@ -2,7 +2,13 @@ import { useState } from "react";
 
 import { useCollection } from "react-firebase-hooks/firestore";
 
+import Select from "react-select";
+
 import PanelStickyHeader from "./PanelStickyHeader";
+
+import { serverTimestamp } from "@lib/firebase";
+
+import { defaultSelectStyles, defaultSelectTheme } from "@utils/ReactSelect";
 
 import styles from "./ShoppingPanel.module.scss";
 import utilStyles from "@styles/utils.module.scss";
@@ -10,20 +16,83 @@ import utilStyles from "@styles/utils.module.scss";
 import CheckIcon from "@icons/check.svg";
 import ChevronRight from "@icons/chevron-right.svg";
 import Modal from "@components/Modal";
+import toast from "react-hot-toast";
 
 export default function ShoppingPanel({ doc }) {
+    const [newItem, setNewItem] = useState("");
+    const [currentView, setCurrentView] = useState({
+        value: "notDone",
+        label: "Not done",
+    });
+
     const shoppingRef = doc?.ref?.collection("shopping");
 
-    const query = shoppingRef
-        ?.where("done", "==", false)
-        ?.orderBy("createdAt", "desc");
+    let query;
+
+    if (currentView.value === "notDone") {
+        query = shoppingRef
+            ?.where("done", "==", false)
+            ?.orderBy("createdAt", "desc");
+    } else if (currentView.value === "done") {
+        query = shoppingRef
+            ?.where("done", "==", true)
+            ?.orderBy("createdAt", "desc");
+    }
+
     const [items, loading, error] = useCollection(query);
+
+    const addNewItem = (e) => {
+        e.preventDefault();
+        shoppingRef
+            .add({
+                name: newItem,
+                notes: "",
+                done: false,
+                createdAt: serverTimestamp(),
+            })
+            .catch((e) => toast.error("Oops! An error occured."));
+        setNewItem("");
+    };
+
+    const viewOptions = [
+        { value: "notDone", label: "Not done" },
+        { value: "done", label: "Done" },
+    ];
 
     return (
         <div className={styles.shoppingPanel}>
             <PanelStickyHeader page="shopping">Shopping list</PanelStickyHeader>
 
             <div className={styles.shoppingListContainer}>
+                <div className={styles.viewSelector}>
+                    <label htmlFor="currentView">Filter: </label>
+                    <Select
+                        value={currentView}
+                        onChange={(selectedView) =>
+                            setCurrentView(selectedView)
+                        }
+                        options={viewOptions}
+                        styles={defaultSelectStyles}
+                        theme={defaultSelectTheme}
+                        id="currentView"
+                        className={styles.viewSelect}
+                    />
+                </div>
+                {currentView.value === "notDone" && (
+                    <form onSubmit={addNewItem} className={styles.newItem}>
+                        <input
+                            value={newItem}
+                            onChange={(e) => {
+                                setNewItem(e.target.value);
+                            }}
+                            placeholder="Add item..."
+                            maxLength={255}
+                        />
+                        <button type="submit" className="btn-blue">
+                            <ChevronRight />
+                        </button>
+                    </form>
+                )}
                 <ul className={styles.itemsList}>
                     {items?.docs.map((item) => (
                         <ShoppingItem key={item.id} itemDoc={item} />
@@ -59,10 +128,7 @@ const ShoppingItem = ({ itemDoc }) => {
                     className={styles.itemDescription}
                     tabIndex={0}
                     role="button"
-                    onClick={() => {
-                        setEditOpen(true);
-                        console.log(editOpen);
-                    }}
+                    onClick={() => setEditOpen(true)}
                 >
                     {item.name}
                 </div>
@@ -87,20 +153,22 @@ const EditItem = ({ itemDoc, setOpen, ...props }) => {
     const save = async (e) => {
         e.preventDefault();
 
-        await itemDoc.ref.set(
-            {
-                name: itemName,
-                notes: itemNotes,
-            },
-            { merge: true }
-        );
+        await itemDoc.ref
+            .set(
+                {
+                    name: itemName,
+                    notes: itemNotes,
+                },
+                { merge: true }
+            )
+            .catch((e) => toast.error("Oops! An error occured."));
 
         setOpen(false);
     };
 
     return (
         <Modal isOpen onRequestClose={props.onRequestClose}>
-            <h3 className={utilStyles.headingLg}>Edit Profile</h3>
+            <h3 className={utilStyles.headingLg}>Edit item</h3>
 
             <form onSubmit={save}>
                 <label htmlFor="itemName">Name</label>
