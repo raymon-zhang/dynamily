@@ -27,7 +27,7 @@ export default function TodosPanel({ doc }) {
     const [newTodo, setNewTodo] = useState("");
     const [currentView, setCurrentView] = useState({
         value: "notDone",
-        label: "Not Done",
+        label: "Not done",
     });
 
     const { username } = useContext(UserContext);
@@ -336,7 +336,7 @@ function EditTodo({ todoDoc, familyDoc, setOpen, ...props }) {
                 <input
                     value={todoName}
                     onChange={(e) => setTodoName(e.target.value)}
-                    placeholder="e.g. Buy some milk"
+                    placeholder="e.g. Walk the dog"
                     className="marginSpacing"
                     id="todoName"
                     maxLength={255}
