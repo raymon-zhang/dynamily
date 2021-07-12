@@ -55,14 +55,16 @@ export default function TodosPanel({ doc }) {
 
     const addNewTodo = (e) => {
         e.preventDefault();
-        todosRef.add({
-            name: newTodo,
-            done: false,
-            deadline: null,
-            assigned: [],
-            color: "blue",
-            createdAt: serverTimestamp(),
-        });
+        todosRef
+            .add({
+                name: newTodo,
+                done: false,
+                deadline: null,
+                assigned: [],
+                color: "blue",
+                createdAt: serverTimestamp(),
+            })
+            .catch((e) => toast.error("Oops! An error occured."));
         setNewTodo("");
     };
 
@@ -282,15 +284,17 @@ function EditTodo({ todoDoc, familyDoc, setOpen, ...props }) {
     const save = async (e) => {
         e.preventDefault();
 
-        await todoDoc.ref.set(
-            {
-                name: todoName,
-                color: todoColor.value,
-                assigned: todoAssign.map((assign) => assign.value),
-                deadline: todoDeadline,
-            },
-            { merge: true }
-        );
+        await todoDoc.ref
+            .set(
+                {
+                    name: todoName,
+                    color: todoColor.value,
+                    assigned: todoAssign.map((assign) => assign.value),
+                    deadline: todoDeadline,
+                },
+                { merge: true }
+            )
+            .catch((e) => toast.error("Oops! An error occured."));
 
         setOpen(false);
     };
