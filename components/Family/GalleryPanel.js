@@ -113,7 +113,6 @@ export default function GalleryPanel({ doc }) {
                 });
                 task.on(STATE_CHANGED, (snapshot) => {
                     setProgress((prev) => {
-                        console.log(snapshot.totalBytes);
                         const newProgress = [...prev];
                         newProgress[count] = Math.floor(
                             (snapshot.bytesTransferred / snapshot.totalBytes) *
@@ -150,7 +149,6 @@ export default function GalleryPanel({ doc }) {
                     "Oops! There was an error! Make sure your file size is less than 5MB.",
                     { duration: 5000 }
                 );
-                console.log(error);
                 setUploading(false);
                 setProgress([0]);
             });
@@ -236,7 +234,6 @@ function ImageViewModal({ setImageViewOpen, getImages, activeImage }) {
                         className={styles.deleteButton}
                         onClick={() => {
                             setDeleteModalOpen(true);
-                            console.log("close");
                         }}
                     >
                         <TrashIcon />
