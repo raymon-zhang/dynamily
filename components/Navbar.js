@@ -18,7 +18,8 @@ import LogoutIcon from "@icons/log-out.svg";
 export default function Navbar() {
     const { user, username, loading } = useContext(UserContext);
 
-    const { setTheme } = useTheme();
+    const { theme, setTheme } = useTheme();
+    const darkModeActive = theme === "dark";
 
     const router = useRouter();
 
