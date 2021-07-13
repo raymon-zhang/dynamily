@@ -60,6 +60,7 @@
                     align-items: center;
                     white-space: nowrap;
                     flex: 1;
+                    margin-left: 10px;
 
                     @media only screen and (max-width: v.$bp-mobile) {
                         font-size: 0.8rem;
