@@ -10,7 +10,6 @@ import { signOut } from "@lib/firebase";
 import utilStyles from "@styles/utils.module.scss";
 
 import Logo from "@icons/Logo.svg";
-import LogoWhite from "@icons/LogoWhite.svg";
 import BrushIcon from "@icons/brush.svg";
 import UserIcon from "@icons/user.svg";
 import LogoutIcon from "@icons/log-out.svg";
@@ -19,8 +18,7 @@ import LogoutIcon from "@icons/log-out.svg";
 export default function Navbar() {
     const { user, username, loading } = useContext(UserContext);
 
-    const { theme, setTheme } = useTheme();
-    const darkModeActive = theme === "dark";
+    const { setTheme } = useTheme();
 
     const router = useRouter();
 
@@ -30,7 +28,7 @@ export default function Navbar() {
                 <li>
                     <Link href="/">
                         <a className="logo">
-                            {darkModeActive ? <LogoWhite /> : <Logo />}
+                            <Logo />
                         </a>
                     </Link>
                 </li>
