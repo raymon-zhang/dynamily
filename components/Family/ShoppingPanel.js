@@ -21,19 +21,19 @@ import toast from "react-hot-toast";
 export default function ShoppingPanel({ doc }) {
     const [newItem, setNewItem] = useState("");
     const [currentView, setCurrentView] = useState({
-        value: "notDone",
-        label: "Not done",
+        value: "notPurchased",
+        label: "Not purchased",
     });
 
     const shoppingRef = doc?.ref?.collection("shopping");
 
     let query;
 
-    if (currentView.value === "notDone") {
+    if (currentView.value === "notPurchased") {
         query = shoppingRef
             ?.where("done", "==", false)
             ?.orderBy("createdAt", "desc");
-    } else if (currentView.value === "done") {
+    } else if (currentView.value === "purchased") {
         query = shoppingRef
             ?.where("done", "==", true)
             ?.orderBy("createdAt", "desc");
@@ -55,8 +55,8 @@ export default function ShoppingPanel({ doc }) {
     };
 
     const viewOptions = [
-        { value: "notDone", label: "Not done" },
-        { value: "done", label: "Done" },
+        { value: "notPurchased", label: "Not purchased" },
+        { value: "purchased", label: "Purchased" },
     ];
 
     return (
@@ -78,7 +78,7 @@ export default function ShoppingPanel({ doc }) {
                         className={styles.viewSelect}
                     />
                 </div>
-                {currentView.value === "notDone" && (
+                {currentView.value === "notPurchased" && (
                     <form onSubmit={addNewItem} className={styles.newItem}>
                         <input
                             value={newItem}
@@ -150,6 +150,8 @@ const EditItem = ({ itemDoc, setOpen, ...props }) => {
     const [itemName, setItemName] = useState(itemData?.name ?? "");
     const [itemNotes, setItemNotes] = useState(itemData?.notes ?? "");
 
+    const [deleteOpen, setDeleteOpen] = useState(false);
+
     const save = async (e) => {
         e.preventDefault();
 
@@ -168,7 +170,12 @@ const EditItem = ({ itemDoc, setOpen, ...props }) => {
 
     return (
         <Modal isOpen onRequestClose={props.onRequestClose}>
-            <h3 className={utilStyles.headingLg}>Edit item</h3>
+            <div className={styles.itemFormTop}>
+                <h3 className={utilStyles.headingLg}>Edit item</h3>
+                <button onClick={() => setDeleteOpen(true)} className="btn-red">
+                    Delete
+                </button>
+            </div>
 
             <form onSubmit={save}>
                 <label htmlFor="itemName">Name</label>
@@ -191,6 +198,22 @@ const EditItem = ({ itemDoc, setOpen, ...props }) => {
                 />
                 <button type="submit">Save</button>
             </form>
+            {deleteOpen && (
+                <Modal isOpen onRequestClose={() => setDeleteOpen(false)}>
+                    <h3 className={utilStyles.headingLg}>
+                        Are you sure you would like to delete this item?
+                    </h3>
+                    <button
+                        onClick={() => {
+                            itemDoc.ref.delete();
+                            setOpen(false);
+                        }}
+                        className="btn-red"
+                    >
+                        Delete
+                    </button>
+                </Modal>
+            )}
         </Modal>
     );
 };
