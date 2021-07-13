@@ -6,7 +6,7 @@ import CloseButton from "./CloseButton";
 const customStyles = {
     default: {
         overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.6)",
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
             zIndex: 1000,
         },
         content: {
@@ -24,6 +24,7 @@ const customStyles = {
             width: "90%",
             maxWidth: 530,
             overflow: "visible",
+            boxShadow: "0px 10px 20px 10px var(--color-shadow)",
         },
     },
     imageView: {
