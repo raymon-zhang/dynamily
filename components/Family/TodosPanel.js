@@ -217,6 +217,8 @@ function EditTodo({ todoDoc, familyDoc, setOpen, ...props }) {
         todoData.deadline?.toDate() ?? null
     );
 
+    const [deleteOpen, setDeleteOpen] = useState(false);
+
     const colorOptions = [
         { value: "blue", label: "Blue" },
         { value: "green", label: "Green" },
@@ -303,15 +305,8 @@ function EditTodo({ todoDoc, familyDoc, setOpen, ...props }) {
         <Modal isOpen onRequestClose={props.onRequestClose}>
             <div className={styles.todoFormTop}>
                 <h3 className={utilStyles.headingLg}>Edit todo</h3>
-                <button
-                    onClick={(e) => {
-                        e.preventDefault();
-                        todoDoc.ref.delete();
-                        setOpen(false);
-                    }}
-                    className="btn-red-light"
-                >
-                    Delete todo
+                <button onClick={() => setDeleteOpen(true)} className="btn-red">
+                    Delete
                 </button>
             </div>
 
@@ -357,6 +352,22 @@ function EditTodo({ todoDoc, familyDoc, setOpen, ...props }) {
                 />
                 <button type="submit">Save</button>
             </form>
+            {deleteOpen && (
+                <Modal isOpen onRequestClose={() => setDeleteOpen(false)}>
+                    <h3 className={utilStyles.headingLg}>
+                        Are you sure you would like to delete this todo?
+                    </h3>
+                    <button
+                        onClick={() => {
+                            todoDoc.ref.delete();
+                            setOpen(false);
+                        }}
+                        className="btn-red"
+                    >
+                        Delete
+                    </button>
+                </Modal>
+            )}
         </Modal>
     );
 }
