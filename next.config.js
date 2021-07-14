@@ -2,22 +2,12 @@ module.exports = {
     webpack(config, { isServer, webpack }) {
         config.module.rules.push({
             test: /\.svg$/,
-            issuer: {
-                test: /\.(js|ts)x?$/,
-            },
+            issuer: /\.(js|ts)x?$/,
             use: ["@svgr/webpack"],
         });
 
-        config.plugins.push(
-            new webpack.DefinePlugin({
-                "process.browser": "true",
-            })
-        );
-
         if (!isServer) {
-            config.node = {
-                fs: "empty",
-            };
+            config.resolve.fallback.fs = false;
         }
 
         return config;

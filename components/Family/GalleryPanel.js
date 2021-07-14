@@ -154,6 +154,25 @@ export default function GalleryPanel({ doc }) {
             });
     };
 
+    const shimmer = `
+        <svg width="200" height="200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <defs>
+                <linearGradient id="g">
+                    <stop stop-color="#00000000" offset="0%" />
+                    <stop stop-color="#00000011" offset="50%" />
+                    <stop stop-color="#00000000" offset="100%" />
+                </linearGradient>
+            </defs>
+            <rect width="200" height="200" fill="#00000000" />
+            <rect id="r" width="200" height="200" fill="url(#g)" />
+            <animate xlink:href="#r" attributeName="x" from="-200" to="200" dur="1s" repeatCount="indefinite"  />
+        </svg>`;
+
+    const toBase64 = (str) =>
+        typeof window === "undefined"
+            ? Buffer.from(str).toString("base64")
+            : window.btoa(str);
+
     return (
         <div className={styles.galleryPanel}>
             <PanelStickyHeader page="gallery">Family gallery</PanelStickyHeader>
@@ -181,18 +200,16 @@ export default function GalleryPanel({ doc }) {
                             setActiveImage(image);
                         }}
                     >
-                        <div className={styles.imagePlaceholder}>
-                            <Loader show />
-                        </div>
-
-                        <div className={styles.imageWrapper}>
-                            <Image
-                                src={image.url}
-                                alt={image.name}
-                                layout="fill"
-                                objectFit="cover"
-                            />
-                        </div>
+                        <Image
+                            src={image.url}
+                            alt={image.name}
+                            layout="fill"
+                            objectFit="cover"
+                            placeholder="blur"
+                            blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                                shimmer
+                            )}`}
+                        />
                     </button>
                 ))}
             </div>
