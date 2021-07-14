@@ -159,7 +159,7 @@ export default function GalleryPanel({ doc }) {
             <defs>
                 <linearGradient id="g">
                     <stop stop-color="#00000000" offset="0%" />
-                    <stop stop-color="#00000011" offset="50%" />
+                    <stop stop-color="#00000022" offset="50%" />
                     <stop stop-color="#00000000" offset="100%" />
                 </linearGradient>
             </defs>
