@@ -102,6 +102,7 @@ export default function TodosPanel({ doc }) {
                             }}
                             placeholder="Add a new todo..."
                             maxLength={255}
+                            required
                         />
                         <button type="submit" className="btn-blue">
                             <ChevronRight />

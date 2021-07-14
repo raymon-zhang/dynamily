@@ -87,6 +87,7 @@ export default function ShoppingPanel({ doc }) {
                             }}
                             placeholder="Add item..."
                             maxLength={255}
+                            required
                         />
                         <button type="submit" className="btn-blue">
                             <ChevronRight />
