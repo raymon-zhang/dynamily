@@ -6,7 +6,7 @@ import CloseButton from "./CloseButton";
 const customStyles = {
     default: {
         overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.3)",
+            backgroundColor: "rgba(0, 0, 0, 0.2)",
             zIndex: 1000,
         },
         content: {
@@ -15,7 +15,7 @@ const customStyles = {
             right: "auto",
             bottom: "auto",
             marginRight: "-50%",
-            borderRadius: 20,
+            borderRadius: 10,
             padding: "40px 40px 40px 40px",
             transform: "translate(-50%, -50%)",
             backgroundColor: "var(--color-base)",
