@@ -8,6 +8,7 @@ import MessageIcon from "@icons/message.svg";
 import GalleryIcon from "@icons/image.svg";
 import TodoIcon from "@icons/check-square.svg";
 import ShoppingIcon from "@icons/shopping-cart.svg";
+import SettingsIcon from "@icons/settings.svg";
 import ChevronDown from "@icons/chevron-down.svg";
 
 export default function PanelStickyHeader({ page, children }) {
@@ -28,10 +29,14 @@ export default function PanelStickyHeader({ page, children }) {
             url: "/family/shopping",
             icon: <ShoppingIcon />,
         },
+        settings: {
+            url: "/family/settings",
+            icon: <SettingsIcon />,
+        },
     };
     const currentPage = pageOptions[page];
 
-    const pages = ["messages", "gallery", "todos", "shopping"];
+    const pages = Object.keys(pageOptions);
     pages.splice(pages.indexOf(page), 1);
 
     return (

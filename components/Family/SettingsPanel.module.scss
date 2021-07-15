@@ -1,0 +1,100 @@
+@use "@styles/variables" as v;
+
+.settingsPanel {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .settingsContainer {
+        display: flex;
+        flex-direction: column;
+
+        .settingsSection {
+            margin-bottom: 30px;
+        }
+
+        .mainSettings {
+            .nameContainer {
+                display: flex;
+                margin-top: 10px;
+
+                button {
+                    margin: 0;
+                    margin-left: 10px;
+                }
+            }
+        }
+
+        .membersSettings {
+            .membersList {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                margin-top: 10px;
+
+                .memberContainer {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 20px;
+                    padding: 15px;
+                    border-radius: 10px;
+                    background-color: var(--color-blue-light);
+
+                    .menuButton {
+                        margin-left: 10px;
+                        position: relative;
+                        width: 18px;
+                        height: 18px;
+                        color: #08090a;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+
+                        .dropdown {
+                            visibility: hidden;
+                            opacity: 0;
+                            background-color: var(--color-base);
+                            box-shadow: 0px 5px 10px var(--color-shadow);
+                            padding: 10px 0px;
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            border-radius: 5px;
+                            transition: opacity var(--timing);
+                            z-index: 99;
+
+                            button {
+                                background-color: var(--color-base);
+                                width: 100%;
+                                margin: 0;
+                                border-radius: 0;
+                                color: var(--color-text-light);
+                                justify-content: flex-start;
+                                white-space: nowrap;
+                                padding: 10px 20px;
+
+                                &:hover {
+                                    filter: none;
+                                }
+
+                                svg {
+                                    width: 18px;
+                                    height: 18px;
+                                    margin-right: 10px;
+                                    color: var(--color-text-light);
+                                }
+                            }
+                        }
+
+                        &:focus-within .dropdown {
+                            visibility: visible;
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
