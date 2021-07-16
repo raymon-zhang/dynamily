@@ -49,7 +49,8 @@ export default function User({
                         } ${utilStyles.borderCircle}`}
                     />
                     {options.size !== "photo" &&
-                        usernameModifier(user?.username)}
+                        user?.username &&
+                        usernameModifier(user.username)}
                 </div>
             </a>
         </Link>
