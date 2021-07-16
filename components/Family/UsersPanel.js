@@ -3,7 +3,7 @@ import User from "@components/User";
 import styles from "./UsersPanel.module.scss";
 import utilStyles from "@styles/utils.module.scss";
 
-export default function UsersPanel({ members }) {
+export default function UsersPanel({ members, admin }) {
     return (
         <div className={styles.leftPanel}>
             <div className={styles.userPanel}>
@@ -11,7 +11,15 @@ export default function UsersPanel({ members }) {
                 <p className={utilStyles.subHeading}>Family members</p>
                 <div className={styles.usersContainer}>
                     {members?.map((member) => (
-                        <User key={member.username} userData={member} />
+                        <User
+                            key={member.username}
+                            userData={member}
+                            usernameModifier={(username) =>
+                                member.username === admin
+                                    ? username + " ⭐"
+                                    : username
+                            }
+                        />
                     ))}
                 </div>
             </div>

@@ -13,6 +13,7 @@ export default function User({
     options = { size: "big" },
     userData = null,
     style,
+    usernameModifier = (username) => username,
 }) {
     const [user, setUser] = useState(null);
 
@@ -47,7 +48,8 @@ export default function User({
                             options.size === "photo" ? styles.noMarginRight : ""
                         } ${utilStyles.borderCircle}`}
                     />
-                    {options.size !== "photo" && user?.username}
+                    {options.size !== "photo" &&
+                        usernameModifier(user?.username)}
                 </div>
             </a>
         </Link>

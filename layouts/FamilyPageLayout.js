@@ -58,7 +58,9 @@ export function FamilyLayout({ children = <MiddlePanel /> }) {
 
     return (
         <DefaultDesktopLayout
-            leftPanel={<UsersPanel members={otherData.members} />}
+            leftPanel={
+                <UsersPanel members={otherData.members} admin={data?.admin} />
+            }
             smallLeftPanel={<SmallUsersPanel members={otherData.members} />}
             rightPanel={<RightPanel />}
         >
