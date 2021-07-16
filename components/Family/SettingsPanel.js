@@ -1,17 +1,21 @@
 import { useState, useEffect, useContext } from "react";
 
+import toast from "react-hot-toast";
+
 import PanelStickyHeader from "./PanelStickyHeader";
 import User from "@components/User";
+import Modal from "@components/Modal";
 
 import { UserContext } from "@lib/context";
 import { arrayRemove } from "@lib/firebase";
 
 import styles from "./SettingsPanel.module.scss";
+import utilStyles from "@styles/utils.module.scss";
 
 import MoreIcon from "@icons/more-vertical.svg";
 import XIcon from "@icons/x.svg";
 import PromoteIcon from "@icons/chevrons-up.svg";
-import Modal from "@components/Modal";
+import CopyIcon from "@icons/copy.svg";
 
 export default function SettingsPanel({ doc }) {
     const data = doc?.data();
@@ -20,6 +24,7 @@ export default function SettingsPanel({ doc }) {
 
     const [removeOpen, setRemoveOpen] = useState(false);
     const [adminOpen, setAdminOpen] = useState(false);
+    const [currentUser, setCurrentUser] = useState("");
 
     const { username } = useContext(UserContext);
 
@@ -34,20 +39,11 @@ export default function SettingsPanel({ doc }) {
         if (familyData.name !== data?.name) {
             doc.ref.set(
                 {
-                    name: data,
+                    name: familyData.name,
                 },
                 { merge: true }
             );
         }
-    };
-
-    const removeUser = (username) => {
-        doc.ref.set(
-            {
-                members: arrayRemove(username),
-            },
-            { merge: true }
-        );
     };
 
     return (
@@ -62,7 +58,16 @@ export default function SettingsPanel({ doc }) {
                 >
                     {isAdmin ? (
                         <form onSubmit={rename}>
-                            <label htmlFor="familyName">Family name</label>
+                            <h4
+                                className={utilStyles.headingMd}
+                                htmlFor="familyName"
+                            >
+                                Family name
+                            </h4>
+                            <p className={utilStyles.subHeading}>
+                                Used to identify your family, shown on messages
+                                page.{" "}
+                            </p>
                             <div className={styles.nameContainer}>
                                 <input
                                     value={familyData.name}
@@ -79,7 +84,12 @@ export default function SettingsPanel({ doc }) {
                         </form>
                     ) : (
                         <>
-                            <label htmlFor="familyName">Family name</label>
+                            <h4
+                                className={utilStyles.headingMd}
+                                htmlFor="familyName"
+                            >
+                                Family name
+                            </h4>
                             <div className={styles.nameContainer}>
                                 <input value={familyData.name} disabled />
                             </div>
@@ -89,7 +99,12 @@ export default function SettingsPanel({ doc }) {
                 <div
                     className={`${styles.settingsSection} ${styles.membersSettings}`}
                 >
-                    <label>Family members</label>
+                    <h4 className={utilStyles.headingMd}>Family members</h4>
+                    {isAdmin && (
+                        <p className={utilStyles.subHeading}>
+                            Manage your family members.
+                        </p>
+                    )}
                     <ul className={styles.membersList}>
                         {familyData.members.map((member) => (
                             <li key={member}>
@@ -97,8 +112,13 @@ export default function SettingsPanel({ doc }) {
                                     <User
                                         username={member}
                                         style={{ padding: 0, color: "#08090a" }}
+                                        usernameModifier={(username) =>
+                                            member === data?.admin
+                                                ? username + " ⭐"
+                                                : username
+                                        }
                                     />
-                                    {isAdmin && (
+                                    {isAdmin && member !== username && (
                                         <div
                                             tabIndex={0}
                                             role="button"
@@ -109,6 +129,7 @@ export default function SettingsPanel({ doc }) {
                                                 <button
                                                     onClick={() => {
                                                         setRemoveOpen(true);
+                                                        setCurrentUser(member);
                                                     }}
                                                 >
                                                     <XIcon />
@@ -117,6 +138,7 @@ export default function SettingsPanel({ doc }) {
                                                 <button
                                                     onClick={() => {
                                                         setAdminOpen(true);
+                                                        setCurrentUser(member);
                                                     }}
                                                 >
                                                     <PromoteIcon />
@@ -129,8 +151,98 @@ export default function SettingsPanel({ doc }) {
                             </li>
                         ))}
                     </ul>
+                    {removeOpen && (
+                        <RemoveModal
+                            username={currentUser}
+                            doc={doc}
+                            setOpen={setRemoveOpen}
+                            onRequestClose={() => setRemoveOpen(false)}
+                        />
+                    )}
+                    {adminOpen && (
+                        <AdminModal
+                            username={currentUser}
+                            doc={doc}
+                            setOpen={setAdminOpen}
+                            onRequestClose={() => setAdminOpen(false)}
+                        />
+                    )}
+                </div>
+                <div
+                    className={`${styles.settingsSection} ${styles.invitationSettings}`}
+                >
+                    <h4 className={utilStyles.headingMd}>Family join code</h4>
+                    <p className={utilStyles.subHeading}>
+                        Use this code to invite new members.
+                    </p>
+                    <div className={styles.codeSection}>
+                        <div className={styles.codeContainer}>{doc?.id}</div>
+                        <button
+                            onClick={() => {
+                                navigator.clipboard.writeText(doc?.id);
+                                toast.success("Copied!");
+                            }}
+                        >
+                            <CopyIcon />
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     );
 }
+
+const RemoveModal = ({ username, doc, setOpen, ...props }) => {
+    const removeUser = async () => {
+        await doc.ref
+            .set(
+                {
+                    members: arrayRemove(username),
+                },
+                { merge: true }
+            )
+            .catch(() => toast.error("Oops! An error occured."));
+
+        setOpen(false);
+    };
+
+    return (
+        <Modal isOpen onRequestClose={props.onRequestClose}>
+            <h3 className={utilStyles.headingLg}>
+                Are you sure you would like to remove {username}?
+            </h3>
+            <button className="btn-red" onClick={removeUser}>
+                Remove
+            </button>
+        </Modal>
+    );
+};
+
+const AdminModal = ({ username, doc, setOpen, ...props }) => {
+    const makeAdmin = async () => {
+        await doc.ref
+            .set(
+                {
+                    admin: username,
+                },
+                { merge: true }
+            )
+            .catch(() => toast.error("Oops! An error occured."));
+
+        setOpen(false);
+    };
+
+    return (
+        <Modal isOpen onRequestClose={props.onRequestClose}>
+            <h3 className={utilStyles.headingLg}>
+                Are you sure you would like to make {username} admin?
+            </h3>
+            <p className={utilStyles.subHeading}>
+                {username} will replace you as the admin.
+            </p>
+            <button className="btn-red" onClick={makeAdmin}>
+                Make admin
+            </button>
+        </Modal>
+    );
+};
