@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 
+import { useRouter } from "next/router";
+
 import { useDocument } from "react-firebase-hooks/firestore";
 
 import DefaultDesktopLayout from "@layouts/DefaultDesktop";
@@ -32,7 +34,7 @@ export default function FamilyPageLayout({ children }) {
 }
 
 export function FamilyLayout({ children = <MiddlePanel /> }) {
-    const { userDoc } = useContext(UserContext);
+    const { user, userDoc, username } = useContext(UserContext);
     const family = userDoc.familyId;
     const familyDoc = firestore.collection("families").doc(family);
     const [snapshot, loading, error] = useDocument(familyDoc);
@@ -53,6 +55,11 @@ export function FamilyLayout({ children = <MiddlePanel /> }) {
         }
         if (data) {
             getMembers();
+
+            if (!data.members.includes(username)) {
+                const userDoc = firestore.doc(`users/${user.uid}`);
+                userDoc.set({ familyId: null }, { merge: true });
+            }
         }
     }, [snapshot]);
 
@@ -138,6 +145,8 @@ function CreateNewFamily(props) {
     const [name, setName] = useState("");
     const isValid = name.length > 1 && name.length < 30;
 
+    const router = useRouter();
+
     const createNewFamily = async (e) => {
         e.preventDefault();
 
@@ -151,6 +160,7 @@ function CreateNewFamily(props) {
         });
 
         batch.set(familyDoc, {
+            admin: username,
             name: familyName,
             members: [username],
         });
@@ -158,6 +168,8 @@ function CreateNewFamily(props) {
         batch.set(userDoc, { familyId }, { merge: true });
 
         await batch.commit();
+
+        router.reload();
     };
 
     return (
@@ -186,6 +198,8 @@ function JoinFamily(props) {
 
     const [code, setCode] = useState("");
 
+    const router = useRouter();
+
     const joinFamily = async (e) => {
         e.preventDefault();
 
@@ -209,6 +223,8 @@ function JoinFamily(props) {
             );
 
             await batch.commit();
+
+            router.reload();
         }
     };
 
