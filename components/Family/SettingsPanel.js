@@ -1,5 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 
+import { useRouter } from "next/router";
+
 import toast from "react-hot-toast";
 
 import PanelStickyHeader from "./PanelStickyHeader";
@@ -7,7 +9,7 @@ import User from "@components/User";
 import Modal from "@components/Modal";
 
 import { UserContext } from "@lib/context";
-import { arrayRemove } from "@lib/firebase";
+import { arrayRemove, firestore } from "@lib/firebase";
 
 import styles from "./SettingsPanel.module.scss";
 import utilStyles from "@styles/utils.module.scss";
@@ -19,17 +21,23 @@ import CopyIcon from "@icons/copy.svg";
 
 export default function SettingsPanel({ doc }) {
     const data = doc?.data();
-    const [familyData, setFamilyData] = useState({ name: "", members: [] });
+    const [familyData, setFamilyData] = useState({
+        name: "",
+        members: [],
+        admin: "",
+    });
     const [isAdmin, setIsAdmin] = useState(false);
 
     const [removeOpen, setRemoveOpen] = useState(false);
     const [adminOpen, setAdminOpen] = useState(false);
+    const [leaveOpen, setLeaveOpen] = useState(false);
+    const [deleteOpen, setDeleteOpen] = useState(false);
     const [currentUser, setCurrentUser] = useState("");
 
-    const { username } = useContext(UserContext);
+    const { user, username } = useContext(UserContext);
 
     useEffect(() => {
-        data?.name && setFamilyData(data);
+        data && setFamilyData(data);
         setIsAdmin(data?.admin === username);
     }, [doc]);
 
@@ -66,7 +74,7 @@ export default function SettingsPanel({ doc }) {
                             </h4>
                             <p className={utilStyles.subHeading}>
                                 Used to identify your family, shown on messages
-                                page.{" "}
+                                page.
                             </p>
                             <div className={styles.nameContainer}>
                                 <input
@@ -176,7 +184,7 @@ export default function SettingsPanel({ doc }) {
                         Use this code to invite new members.
                     </p>
                     <div className={styles.codeSection}>
-                        <div className={styles.codeContainer}>{doc?.id}</div>
+                        <input value={doc?.id || ""} disabled />
                         <button
                             onClick={() => {
                                 navigator.clipboard.writeText(doc?.id);
@@ -186,6 +194,46 @@ export default function SettingsPanel({ doc }) {
                             <CopyIcon />
                         </button>
                     </div>
+                </div>
+                <div
+                    className={`${styles.settingsSection} ${styles.dangerZone}`}
+                >
+                    <h4 className={utilStyles.headingMd}>Danger zone</h4>
+                    <p className={styles.subHeading}>
+                        Be careful! Changes in this section may be permanent.
+                    </p>
+                    <div className={styles.buttonsContainer}>
+                        <button
+                            onClick={() => setLeaveOpen(true)}
+                            className="btn-red-light"
+                        >
+                            Leave family
+                        </button>
+                        {isAdmin && (
+                            <button
+                                onClick={() => setDeleteOpen(true)}
+                                className="btn-red-light"
+                            >
+                                Delete family
+                            </button>
+                        )}
+                    </div>
+                    {leaveOpen && (
+                        <LeaveModal
+                            user={user}
+                            username={username}
+                            doc={doc}
+                            onRequestClose={() => setLeaveOpen(false)}
+                        />
+                    )}
+                    {deleteOpen && (
+                        <DeleteModal
+                            user={user}
+                            username={username}
+                            doc={doc}
+                            onRequestClose={() => setDeleteOpen(false)}
+                        />
+                    )}
                 </div>
             </div>
         </div>
@@ -243,6 +291,131 @@ const AdminModal = ({ username, doc, setOpen, ...props }) => {
             <button className="btn-red" onClick={makeAdmin}>
                 Make admin
             </button>
+        </Modal>
+    );
+};
+
+const LeaveModal = ({ user, username, doc, ...props }) => {
+    const router = useRouter();
+
+    const data = doc.data();
+
+    const isAdmin = username === data.admin;
+
+    const leaveFamily = async () => {
+        const batch = firestore.batch();
+        const userDoc = firestore.doc(`users/${user.uid}`);
+        const familyDoc = doc.ref;
+
+        batch.set(userDoc, { familyId: null }, { merge: true });
+        batch.set(
+            familyDoc,
+            { members: arrayRemove(username) },
+            { merge: true }
+        );
+
+        await batch.commit();
+
+        router.push("/family");
+    };
+
+    return (
+        <Modal isOpen onRequestClose={props.onRequestClose}>
+            {data.members.length > 1 ? (
+                isAdmin ? (
+                    <>
+                        <h3 className={utilStyles.headingLg}>
+                            You are currently the admin of this family.
+                        </h3>
+                        <p className={utilStyles.subHeading}>
+                            You must make another member of the family the admin
+                            before leaving.
+                        </p>
+                        <button onClick={props.onRequestClose}>Go back</button>
+                    </>
+                ) : (
+                    <>
+                        <h3 className={utilStyles.headingLg}>
+                            Are you sure you would like to leave this family?
+                        </h3>
+                        <button onClick={leaveFamily} className="btn-red">
+                            Leave
+                        </button>
+                    </>
+                )
+            ) : (
+                <>
+                    <h3 className={utilStyles.headingLg}>
+                        You are the only member of this family.
+                    </h3>
+                    <p className={utilStyles.subHeading}>
+                        Instead of leaving this family, you can delete it.
+                    </p>
+                    <button onClick={props.onRequestClose}>Go back</button>
+                </>
+            )}
+        </Modal>
+    );
+};
+
+const DeleteModal = ({ user, username, doc, ...props }) => {
+    const router = useRouter();
+
+    const data = doc.data();
+
+    const deleteFamily = async () => {
+        const batch = firestore.batch();
+        const familyDoc = doc.ref;
+        const userDoc = firestore.doc(`users/${user.uid}`);
+
+        const messagesRef = familyDoc.collection("messages");
+        const messagesDocs = await messagesRef.get();
+        messagesDocs.forEach((doc) => batch.delete(doc.ref));
+
+        const todosRef = familyDoc.collection("todos");
+        const todosDocs = await todosRef.get();
+        todosDocs.forEach((doc) => batch.delete(doc.ref));
+
+        const shoppingRef = familyDoc.collection("shopping");
+        const shoppingDocs = await shoppingRef.get();
+        shoppingDocs.forEach((doc) => batch.delete(doc.ref));
+
+        batch.delete(familyDoc);
+
+        batch.set(userDoc, { familyId: null }, { merge: true });
+
+        await batch.commit();
+
+        router.push("/family");
+    };
+
+    return (
+        <Modal isOpen onRequestClose={props.onRequestClose}>
+            {data.members.length > 1 ? (
+                <>
+                    <h3 className={utilStyles.headingLg}>
+                        There are still other members in this family.
+                    </h3>
+                    <p>Remove them first before deleting.</p>
+                    <button onClick={props.onRequestClose}>Go back</button>
+                </>
+            ) : (
+                <>
+                    <h3 className={utilStyles.headingLg}>
+                        Are you sure you would like to delete this family?
+                    </h3>
+                    <p className={utilStyles.subHeading}>
+                        This will delete all of its data, including messages,
+                        pictures, todos, and shopping items.
+                    </p>
+                    <p className={utilStyles.subHeading}>
+                        This can not be undone.
+                    </p>
+                    <button onClick={deleteFamily} className="btn-red">
+                        Delete
+                    </button>
+                </>
+            )}
         </Modal>
     );
 };

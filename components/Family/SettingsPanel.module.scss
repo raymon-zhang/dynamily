@@ -106,14 +106,6 @@
             .codeSection {
                 display: flex;
 
-                .codeContainer {
-                    display: inline-block;
-                    background-color: var(--color-blue-light);
-                    border-radius: 20px;
-                    width: 100%;
-                    padding: 10px 20px;
-                }
-
                 button {
                     margin: 0;
                     margin-left: 20px;
@@ -122,6 +114,31 @@
                     svg {
                         width: 18px;
                         height: 18px;
+                    }
+                }
+            }
+        }
+
+        .dangerZone {
+            background-color: var(--color-red-light);
+            color: var(--color-red);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 50px;
+
+            .buttonsContainer {
+                margin-top: 50px;
+
+                button {
+                    margin: 0;
+                    margin-top: 20px;
+                    width: 100%;
+                    border: 1.5px solid var(--color-red);
+                    transition: all 500ms;
+
+                    &:hover {
+                        background-color: var(--color-red);
+                        color: var(--color-base);
                     }
                 }
             }
