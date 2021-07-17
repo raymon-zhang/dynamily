@@ -1,5 +1,7 @@
 import { useContext, useState } from "react";
 
+import toast from "react-hot-toast";
+
 import { UserContext } from "@lib/context";
 import { firestore } from "@lib/firebase";
 
@@ -116,6 +118,10 @@ function EditProfile({ userDoc, setOpen, ...props }) {
             },
             { merge: true }
         );
+
+        toast.success("Profile updated! Refresh the page to view changes. ", {
+            duration: 5000,
+        });
 
         setOpen(false);
     };
