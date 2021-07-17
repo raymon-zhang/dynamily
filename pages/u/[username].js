@@ -99,7 +99,6 @@ export default function UserProfilePage({ user }) {
 }
 
 function EditProfile({ userDoc, setOpen, ...props }) {
-    const [photoURL, setPhotoURL] = useState(userDoc.photoURL || "");
     const [displayName, setDisplayName] = useState(userDoc.displayName || "");
     const [bio, setBio] = useState(userDoc.bio || "");
 
@@ -112,7 +111,6 @@ function EditProfile({ userDoc, setOpen, ...props }) {
 
         await userDoc.set(
             {
-                photoURL,
                 displayName,
                 bio,
             },
@@ -127,14 +125,6 @@ function EditProfile({ userDoc, setOpen, ...props }) {
             <h3 className={utilStyles.headingLg}>Edit Profile</h3>
 
             <form onSubmit={save}>
-                <label htmlFor="photoUrl">Google avatar URL</label>
-                <input
-                    value={photoURL}
-                    onChange={(e) => setPhotoURL(e.target.value)}
-                    placeholder="URL"
-                    className="marginSpacing"
-                    id="photoUrl"
-                />
                 <label htmlFor="displayName">Display Name</label>
                 <input
                     value={displayName}
