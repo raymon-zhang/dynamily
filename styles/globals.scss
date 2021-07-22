@@ -144,7 +144,7 @@ main {
 // Navbar
 
 .navbar {
-    height: 70px;
+    height: v.$navbar-height;
     width: 100%;
     background-color: var(--color-navbar);
     color: var(--color-text);
