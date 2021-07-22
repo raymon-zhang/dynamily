@@ -9,7 +9,7 @@ import Redirect from "@components/Redirect";
 export default function Home() {
     return (
         <main>
-            <Metatags />
+            <Metatags title="Dynamily | Helping families stay connected" />
             <AuthCheck fallback={<LandingPage />}>
                 <Redirect to="/family" />
             </AuthCheck>
