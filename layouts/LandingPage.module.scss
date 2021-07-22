@@ -1,5 +1,35 @@
 @use "@styles/variables" as v;
 
 .landingPage {
-    margin-top: v.$top-margin;
+    width: 100%;
+    background-color: var(--color-blue-light);
+
+    section {
+        &.hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            min-height: 100vh;
+            padding-top: v.$navbar-height;
+
+            .heroInner {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+
+                .heroHeading {
+                    font-size: 4rem;
+                    font-weight: normal;
+                }
+
+                .heroSubHeading {
+                    margin: 0;
+                    font-size: 1.5rem;
+                    color: var(--color-text-light);
+                }
+            }
+        }
+    }
 }
