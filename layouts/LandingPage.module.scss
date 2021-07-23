@@ -11,25 +11,152 @@
             align-items: center;
             height: 100vh;
             min-height: 100vh;
-            padding-top: v.$navbar-height;
 
             .heroInner {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
+                align-items: center;
                 text-align: center;
 
                 .heroHeading {
                     font-size: 4rem;
                     font-weight: normal;
+                    margin-bottom: 40px;
+                    max-width: 65vw;
+
+                    @media only screen and (max-width: v.$bp-mobile) {
+                        font-size: 3rem;
+                        max-width: 80vw;
+                    }
                 }
 
                 .heroSubHeading {
                     margin: 0;
-                    font-size: 1.5rem;
+                    font-size: 1.2rem;
                     color: var(--color-text-light);
+                    line-height: 2;
+                    width: 40vw;
+                    max-width: 40vw;
+
+                    @media only screen and (max-width: v.$bp-tablet) {
+                        width: 60vw;
+                        max-width: 60vw;
+                    }
+
+                    @media only screen and (max-width: v.$bp-mobile) {
+                        width: 80vw;
+                        max-width: 80vw;
+                        font-size: 1rem;
+                    }
+                }
+
+                .heroButton {
+                    margin: 0;
+                    padding-top: 25px;
+                    padding-bottom: 25px;
+                    font-size: 1rem;
+                    width: 35vw;
+                    max-width: 35vw;
+
+                    @media only screen and (max-width: v.$bp-tablet) {
+                        width: 60vw;
+                        max-width: 60vw;
+                    }
+
+                    @media only screen and (max-width: v.$bp-mobile) {
+                        width: 80vw;
+                        max-width: 80vw;
+                    }
+
+                    &.heroCta {
+                        background-color: var(--color-blue);
+                        color: var(--color-base);
+                        margin-top: 50px;
+                        box-shadow: 0px 10px 20px -10px var(--color-blue);
+                    }
+
+                    &.heroSecondary {
+                        background-color: var(--color-base);
+                        color: var(--color-blue);
+                        margin-top: 20px;
+                        box-shadow: 0px 10px 20px var(--color-shadow);
+                    }
                 }
             }
+
+            .familyImage {
+                position: absolute;
+                font-size: 0;
+
+                .imageContainer {
+                    border-radius: 50%;
+                    overflow: hidden;
+
+                    @media only screen and (max-width: v.$bp-tablet) {
+                        display: none;
+                    }
+
+                    img {
+                        z-index: 1;
+                    }
+                }
+
+                .dots {
+                    position: absolute;
+                    background-image: radial-gradient(
+                        circle at 2px 2px,
+                        var(--color-green) 2px,
+                        transparent 0
+                    );
+                    background-size: 25px 25px;
+                    width: 240px;
+                    height: 160px;
+
+                    @media only screen and (max-width: v.$bp-laptop) {
+                        display: none;
+                    }
+                }
+
+                &.familyMother {
+                    top: 15%;
+                    left: 5%;
+                }
+
+                &.familyFather {
+                    top: 25%;
+                    right: 5%;
+
+                    .dots {
+                        top: 50%;
+                        left: -30%;
+                    }
+                }
+
+                &.familyOlderSon {
+                    top: 65%;
+                    left: 10%;
+
+                    .dots {
+                        bottom: 30%;
+                        right: 0%;
+                        background-image: radial-gradient(
+                            circle at 2px 2px,
+                            var(--color-blue) 2px,
+                            transparent 0
+                        );
+                    }
+                }
+
+                &.familyYoungerSon {
+                    top: 75%;
+                    right: 15%;
+                }
+            }
+        }
+
+        &.hello {
+            background-color: var(--color-base);
         }
     }
 }
