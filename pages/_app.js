@@ -74,7 +74,7 @@ function MyApp({ Component, pageProps }) {
                     <script>self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;</script>
                 )}
             </Head>
-            <ThemeProvider>
+            <ThemeProvider forcedTheme={userData.username ? null : "light"}>
                 <Navbar />
                 {router.pathname.startsWith("/family") ? (
                     <FamilyPageLayout>
