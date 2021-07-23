@@ -19,7 +19,7 @@
 }
 
 :root {
-    --color-navbar: #ffffffcc;
+    --color-navbar: #ffffffbb;
     --color-base: #ffffff;
     --color-bg: #fbfdff;
     --color-bg-accent: #e8ebed;
@@ -50,7 +50,7 @@
 }
 
 [data-theme="dark"] {
-    --color-navbar: #000000cc;
+    --color-navbar: #000000bb;
     --color-base: #000000;
     --color-bg: #252525;
     --color-bg-accent: #444444;
@@ -154,7 +154,7 @@ main {
     font-weight: bold;
     z-index: 99;
     box-shadow: 0px 5px 20px var(--color-shadow);
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(10px);
 
     ul {
         list-style: none;
