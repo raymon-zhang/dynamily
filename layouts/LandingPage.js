@@ -17,9 +17,9 @@ export default function LandingPage() {
                         Keep your family organized
                     </h1>
                     <p className={styles.heroSubHeading}>
-                        It can be difficult to keep your family organized.
-                        Dynamily empowers you manage and connect your family's
-                        everyday life, for free.
+                        It can be difficult to keep your family on the same
+                        page. Dynamily empowers you manage and connect your
+                        family's everyday life, for free.
                     </p>
                     <Link href="/login">
                         <button
