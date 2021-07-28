@@ -7,6 +7,7 @@ import { useTheme } from "next-themes";
 import { UserContext } from "@lib/context";
 import { signOut } from "@lib/firebase";
 
+import styles from "./Navbar.module.scss";
 import utilStyles from "@styles/utils.module.scss";
 
 import Logo from "@icons/Logo.svg";
@@ -24,11 +25,11 @@ export default function Navbar() {
     const router = useRouter();
 
     return (
-        <nav className="navbar">
+        <nav className={styles.navbar}>
             <ul>
                 <li>
                     <Link href="/">
-                        <a className="logo">
+                        <a className={styles.logo}>
                             <Logo />
                         </a>
                     </Link>
@@ -41,18 +42,18 @@ export default function Navbar() {
                             <div
                                 tabIndex={0}
                                 role="button"
-                                className="profileButton"
+                                className={styles.profileButton}
                             >
                                 <img src={user?.photoURL} />
-                                <div className="dropdown">
+                                <div className={styles.dropdown}>
                                     <Link href={`/u/${username}`}>
-                                        <a className="dropdownItem">
+                                        <a className={styles.dropdownItem}>
                                             <UserIcon /> Profile
                                         </a>
                                     </Link>
-                                    <button className="dropdownItem">
+                                    <button className={styles.dropdownItem}>
                                         <BrushIcon /> Dark mode{" "}
-                                        <label className="switch">
+                                        <label className={styles.switch}>
                                             <input
                                                 type="checkbox"
                                                 checked={darkModeActive}
@@ -62,14 +63,16 @@ export default function Navbar() {
                                                         : setTheme("dark");
                                                 }}
                                             />
-                                            <span className="slider round"></span>
+                                            <span
+                                                className={styles.slider}
+                                            ></span>
                                         </label>
                                     </button>
                                     <button
                                         onClick={() => {
                                             signOut(router);
                                         }}
-                                        className="dropdownItem"
+                                        className={styles.dropdownItem}
                                     >
                                         <LogoutIcon />
                                         Sign Out
