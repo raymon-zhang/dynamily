@@ -22,18 +22,16 @@ export default function LandingPage() {
                         family's everyday life, for free.
                     </p>
                     <Link href="/login">
-                        <button
-                            className={`${styles.heroButton} ${styles.heroCta}`}
-                        >
+                        <a className={`${styles.heroButton} ${styles.heroCta}`}>
                             Sign up today
-                        </button>
+                        </a>
                     </Link>
                     <Link href="/login">
-                        <button
+                        <a
                             className={`${styles.heroButton} ${styles.heroSecondary}`}
                         >
                             Learn more
-                        </button>
+                        </a>
                     </Link>
                 </div>
                 <div className={`${styles.familyImage} ${styles.familyMother}`}>
