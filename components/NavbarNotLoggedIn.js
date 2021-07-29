@@ -20,9 +20,14 @@ export default function NavbarNotLoggedIn() {
 
                 {/* <li className={utilStyles.pushLeft}>
                         </li> */}
-                <li>
+                <li className={utilStyles.pushLeft}>
                     <Link href="/login">
                         <button className={styles.loginButton}>Log in</button>
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/login">
+                        <button className={styles.signupButton}>Sign up</button>
                     </Link>
                 </li>
             </ul>
