@@ -159,7 +159,7 @@ button,
     margin: 0.5rem 1rem 0.5rem 0;
     transition: filter var(--timing);
 
-    @media only screen and (max-width: v.$bp-tablet) {
+    @media (max-width: v.$bp-tablet) {
         padding: 0.5rem 1rem;
         font-size: 0.8rem;
     }

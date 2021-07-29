@@ -19,11 +19,11 @@
             width: 45%;
             padding: 70px;
 
-            @media only screen and (max-width: v.$bp-tablet) {
+            @media (max-width: v.$bp-tablet) {
                 padding: 20px;
             }
 
-            @media only screen and (max-width: v.$bp-mobile) {
+            @media (max-width: v.$bp-mobile) {
                 display: none;
             }
 
@@ -42,15 +42,15 @@
             justify-content: space-around;
             text-align: center;
 
-            @media only screen and (max-width: v.$bp-laptop) {
+            @media (max-width: v.$bp-laptop) {
                 padding: 50px;
             }
 
-            @media only screen and (max-width: v.$bp-tablet) {
+            @media (max-width: v.$bp-tablet) {
                 padding: 30px;
             }
 
-            @media only screen and (max-width: v.$bp-mobile) {
+            @media (max-width: v.$bp-mobile) {
                 width: 100%;
             }
 
