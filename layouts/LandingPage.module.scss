@@ -2,7 +2,6 @@
 
 .landingPage {
     width: 100%;
-    background-color: var(--color-blue-light);
 
     section {
         &.hero {
@@ -11,6 +10,7 @@
             align-items: center;
             height: 100vh;
             min-height: 100vh;
+            background-color: var(--color-blue-light);
 
             .heroInner {
                 display: flex;
