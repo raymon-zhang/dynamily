@@ -85,6 +85,33 @@ export default function LandingPage() {
                     </div>
                 </div>
             </section>
+            <section className={styles.footer}>
+                <div className={styles.footerContent}>
+                    <div className={styles.footerContainer}>
+                        <div className={styles.footerInner}>
+                            <h3 className={styles.footerHeading}>
+                                Get started now!
+                            </h3>
+                            <p className={styles.footerSubHeading}>
+                                Everything you need to keep your family
+                                organized. Create your free account today!
+                            </p>
+                        </div>
+                        <div className={styles.footerButtons}>
+                            <Link href="/login">
+                                <a className={styles.footerButtonPrimary}>
+                                    Start now
+                                </a>
+                            </Link>
+                            <Link href="/login">
+                                <a className={styles.footerButtonSecondary}>
+                                    Learn more
+                                </a>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 }
