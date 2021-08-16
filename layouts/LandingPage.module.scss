@@ -207,17 +207,30 @@
                             margin-bottom: 20px;
                             font-size: 2.5rem;
                             font-weight: normal;
+
+                            @media (max-width: v.$bp-mobile) {
+                                text-align: center;
+                            }
                         }
 
                         .footerSubHeading {
                             color: var(--color-text-light);
                             margin: 0;
                             font-size: 1.1rem;
+
+                            @media (max-width: v.$bp-mobile) {
+                                text-align: center;
+                            }
                         }
                     }
 
                     .footerButtons {
                         display: flex;
+
+                        @media (max-width: v.$bp-mobile) {
+                            justify-content: space-around;
+                            width: 100%;
+                        }
 
                         .footerButtonPrimary {
                             display: block;
