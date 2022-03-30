@@ -1,4 +1,4 @@
-<a href="https://dynamily.tk">
+<a href="https://dynamily.ga">
     <p align="center">
         <img height=120 alt="Dynamily" src="assets/logo.svg" />
     </p>
@@ -17,7 +17,7 @@
 </div>
 <br>
 <div align=center>
-    <a href="https://dynamily.tk/login"><strong>Sign up today 🡭</strong></a>
+    <a href="https://dynamily.ga/login"><strong>Sign up today 🡭</strong></a>
 </div>
 <br>
 <div align="center">
