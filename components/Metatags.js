@@ -3,7 +3,7 @@ import Head from "next/head";
 export default function Metatags({
     title = "Dynamily",
     description = "Dynamily helps you manage and connect your family's everyday life.",
-    image = "https://dynamily.tk/images/featured.png",
+    image = "https://dynamily.ga/images/featured.png",
 }) {
     return (
         <Head>
